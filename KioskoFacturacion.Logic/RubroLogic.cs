@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using KioskoFacturacion.Web.Models;
 
 namespace KioskoFacturacion.Logic
 {

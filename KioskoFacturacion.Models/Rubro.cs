@@ -1,9 +1,13 @@
-public class Rubro
+namespace KioskoFacturacion.Web.Models
 {
-    public string Nombre { get; set; }
-
-    public Rubro(string nombre)
+    public class Rubro
     {
-        this.Nombre = nombre;
+        public Rubro(string nombre)
+        {
+            Nombre = nombre;
+        }
+
+        public string Nombre { get; set; }
+        public string Descripcion { get; set; }
     }
 }

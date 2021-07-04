@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using KioskoFacturacion.Logic;
+using KioskoFacturacion.Web.Models;
 
 namespace KioskoFacturacion.ConsoleApp
 {
@@ -10,9 +11,9 @@ namespace KioskoFacturacion.ConsoleApp
         {
 
             RubroLogic logic = new RubroLogic();
-            logic.Guardar("Limpieza");
+            logic.Guardar("Perfumeria");
             // logic.Guardar("");
-            logic.Guardar(new Rubro("Comestibles"));
+            //logic.Guardar(new Rubro("Comestibles"));
             // logic.Guardar(new Rubro(""));
 
             List<Rubro> list = logic.Listar();
