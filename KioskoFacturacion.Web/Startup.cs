@@ -47,7 +47,7 @@ namespace KioskoFacturacion.Web
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Facturacion/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
@@ -63,7 +63,7 @@ namespace KioskoFacturacion.Web
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Facturacion}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
         }

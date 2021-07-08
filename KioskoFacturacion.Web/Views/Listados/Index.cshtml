@@ -1,0 +1,22 @@
+@model List<Rubro>
+
+@{
+    ViewData["Title"] = "Listados";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Menú de Listados</h1>
+    <p>Próximamente habrá disponible un menú para generar Listados <br><a
+            href="mailto:karimemilio98@gmail.com?Subject=Menú Listados%20de%20la%20aplicacion">Contactar por
+            correo</a></p>
+</div>
+<div align="center"><a asp-action="ListarProductos" class="btn btn-success">Listar productos</a>
+    <button type="button" class="btn btn-success" disabled>Listar ventas</button>
+</div>
+<h1>@ViewData["Title"]</h1>
+<h3>@foreach (var item in Model)
+    {
+        @item.Nombre
+        <br>
+    }
+</h3>

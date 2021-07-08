@@ -13,7 +13,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Maxikiosco 9 de julio</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Facturacion" asp-action="Index"></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -21,18 +21,27 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home"
-                                asp-action="Index">Inicio</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Facturacion"
+                                asp-action="Index"><img src="
+                                https://img.icons8.com/plasticine/100/000000/full-image.png" /></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home"
-                                asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Facturacion"
+                                asp-action="Index"><img
+                                    src="https://img.icons8.com/plasticine/100/000000/bill.png" /></a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Gestion" asp-action="Index"><img
+                                    src="https://img.icons8.com/plasticine/100/000000/refresh-barcode.png" /></a>
+                        </li>
+
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
             </div>
         </nav>
+        <p style="text-align:center; font-weight:bold; background-color:tomato">SITIO EN CONSTRUCCIÓN</p>
+
     </header>
     <div class="container">
         <main role="main" class="pb-3">
@@ -42,7 +51,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2021 - KioskoFacturacion.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2021 - Karim Emilio - <a asp-area="" asp-controller="Facturacion" asp-action="Contacto">Contacto</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

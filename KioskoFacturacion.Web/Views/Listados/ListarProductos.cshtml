@@ -1,0 +1,32 @@
+@{
+    ViewData["Title"] = "Listados - Productos";
+}
+
+<h1>@ViewData["Title"]</h1>
+<br>
+<form asp-action="Listar" method="post">
+    <div class="container">
+        <div class="row">
+            <div class="col-8 col-md-4">
+                <h6>Rubro</h6>
+                <select class="custom-select custom-select-sm" id="nombre">
+                    <option selected>Elegir...</option>
+                    <option value="1">Limpieza</option>
+                    <option value="2">Perfumería</option>
+                    <option value="3">Golosinas</option>
+                    <option value="4">Todas</option>
+                </select>
+
+                <h6>Cantidad</h6>
+                <select class="custom-select" id="cantidad">
+                    <option selected>Cantidad a mostrar</option>
+                    <option value="1">Últimos 50</option>
+                    <option value="2">Últimos 100</option>
+                    <option value="3">Todos</option>
+                </select>
+                <input type="submit" value="Listar">
+            </div>
+        </div>
+
+    </div>
+</form>

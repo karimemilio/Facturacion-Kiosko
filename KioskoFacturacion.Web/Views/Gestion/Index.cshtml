@@ -1,0 +1,45 @@
+@{
+        ViewData["Title"] = "Menú de Gestión";
+}
+
+<div class="container text-center">
+        <h1 class="display-4">
+                <h1>@ViewData["Title"]</h1>
+        </h1>
+
+        <div>
+                <div class="form-row">
+                        <div class="form-group col-md-2">
+                                <a asp-area="" asp-controller="" asp-action=""> <button type="button"
+                                                class="btn btn-success">Actualización de
+                                                precios</button></a>
+                        </div>
+                        <div class="form-group col-md-2">
+                                <a asp-area="" asp-controller="" asp-action=""> <button type="button"
+                                                class="btn btn-success">Actualización de stock</button></a>
+                        </div>
+                </div>
+                <div class="form-row">
+                        <div class="form-group col-md-2">
+                                <a asp-area="" asp-controller="Productos" asp-action="Alta"> <button type="button"
+                                                class="btn btn-success">Agregar producto nuevo</button></a>
+                        </div>
+                        <div class="form-group col-md-2">
+                                <a asp-area="" asp-controller="Gestion" asp-action="ModificarProducto"> <button
+                                                type="button" class="btn btn-success">Modificar producto
+                                                existente</button></a>
+                        </div>
+                </div>
+                <div class="form-row">
+                        <div class="form-group col-md-2">
+                                <a asp-area="" asp-controller="Rubros" asp-action="Index"> <button
+                                                style="height:62px;width:178px" type="button"
+                                                class="btn btn-success">Rubros</button></a>
+                        </div>
+                        <div class="form-group col-md-2">
+                                <a asp-area="" asp-controller="Gestion" asp-action="Listados"> <button type="button"
+                                                class="btn btn-success">Resumenes de ventas</button></a>
+                        </div>
+                </div>
+        </div>
+</div>

@@ -1,0 +1,18 @@
+<h1>Cargar rubro nuevo</h1>
+<form asp-action="Guardar" method="post">
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="nombreR">Nombre del rubro</label>
+            <input type="text" class="form-control" id="nombreR" placeholder="Ingrese un nombre...">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="estadoR">Estado</label>
+            <select id="estadoR" class="form-control">
+                <option selected>Elegir estado...</option>
+                <option>Activo</option>
+                <option>Inactivo</option>
+            </select>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+</form>

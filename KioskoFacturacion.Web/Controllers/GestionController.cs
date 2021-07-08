@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -9,23 +9,33 @@ using KioskoFacturacion.Web.Models;
 
 namespace KioskoFacturacion.Web.Controllers
 {
-    public class HomeController : Controller
+    public class GestionController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
 
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult ModificarProducto()
         {
             return View();
+        }
+
+        public IActionResult Rubros()
+        {
+            return View();
+        }
+
+        public IActionResult Listados()
+        {
+            return View();
+        }
+        public IActionResult GuardarProducto()
+        {
+            Producto nuevoProducto = new Producto();
+            return RedirectToAction("Index");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

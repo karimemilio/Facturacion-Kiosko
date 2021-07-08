@@ -1,0 +1,61 @@
+@{
+    ViewData["Title"] = "Menú de Gestión";
+}
+
+<div class="text-center">
+    <h1 class="display-4">
+        <h1> @ViewData["Title"] </h1>
+    </h1>
+    <h2>Ingresar producto nuevo</h2>
+</div>
+
+<form asp-action="Index" method="Index">
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="nombreP">Nombre del producto</label>
+            <input type="text" class="form-control" id="nombreP" placeholder="Ingrese un nombre...">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="marcaP">Marca</label>
+            <input type="text" class="form-control" id="marcaP" placeholder="Ingrese la marca...">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="descripcionP">Descripción</label>
+        <input type="textarea" class="form-control" id="descripcionP"
+            placeholder="Ingrese una descripción para el producto...">
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="vencimientoP">Vencimiento</label>
+            <input type="date" class="form-control" id="vencimientoP">
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="gridCheck">
+            <label class="form-check-label" for="gridCheck">
+                Sin vencimiento
+            </label>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="rubroP">Rubro</label>
+            <select id="rubroP" class="form-control">
+                <option selected>Elegir...</option>
+                <option>Perfumeria</option>
+                <option>Golosinas</option>
+                <option>Regaleria</option>
+                <option>Limpieza</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-2">
+            <label for="costoP">Precio de costo</label>
+            <input type="number" step="0.001" class="form-control" id="costoP">
+        </div>
+        <div class="form-group col-md-2">
+            <label for="ventaP">Precio de venta</label>
+            <input type="text" type="number" step="0.01" class="form-control" id="ventaP">
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Enviar</button>
+</form>

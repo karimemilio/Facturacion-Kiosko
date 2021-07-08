@@ -1,17 +1,50 @@
-<h1>Rubros</h1>
-<div class="row">
-    <div class="col-md-6">
-        <form action="@Url.Action("Guardar", "Rubros")" method="POST">
-            <div class=" form-group">
-                <label for="nombre">Nombre</label>
-                <input type="text" id="nombre" name="nombre" required>
+@model IEnumerable<Rubro>
 
-                <label for="descripcion">Descripcion</label>
-                <input type="text" id="descripcion" name="descripcion">
+@{
+    ViewData["Title"] = "Rubros";
+}
 
+<div class="container text-center">
+    <h1>@ViewData["Title"]</h1>
+</div>
 
+<p>
+    <a asp-action="Nuevo">Crear nuevo</a>
+</p>
 
-                <input type="submit" value="Guardar">
-            </div>
-        </form>
-    </div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Estado
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.ID
+                </td>
+                <td>
+                    @item.Nombre
+                </td>
+                <td>
+                    @item.Estado
+                </td>
+                <td>
+                    <a asp-action="Editar" asp-route-ID="@item.ID">Editar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
