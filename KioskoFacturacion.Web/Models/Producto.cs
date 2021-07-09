@@ -16,5 +16,7 @@ namespace KioskoFacturacion.Web.Models
         public string Rubro { get; set; }
         public long PrecioCosto { get; set; }
         public long PrecioVenta { get; set; }
+        [Key]
+        public int codigo { get; set;}
     }
 }

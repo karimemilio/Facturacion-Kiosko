@@ -3,49 +3,54 @@ using KioskoFacturacion.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
+using KioskoFacturacion.Web.Data;
 
 namespace KioskoFacturacion.Web.Controllers
 {
     public class RubrosController : Controller
     {
-        List<Rubro> Data = null;
-
-        public RubrosController()
+        private ApplicationDbContext context;
+        public RubrosController(ApplicationDbContext context)
         {
-            Data = new List<Rubro>();
-            Data.Add(new Rubro() { ID = Guid.Parse("af5da2a1-a9e4-4b57-b9e5-5374a38a1fa2"), Nombre = "Golosinas", Estado = "Activo" });
-            Data.Add(new Rubro() { ID = Guid.Parse("bf5da2a1-a9e4-4b57-b9e5-5374a38a1fa2"), Nombre = "Cigarrillos", Estado = "Activo" });
-            Data.Add(new Rubro() { ID = Guid.Parse("cf5da2a1-a9e4-4b57-b9e5-5374a38a1fa2"), Nombre = "Limpieza", Estado = "Activo" });
-            Data.Add(new Rubro() { ID = Guid.Parse("df5da2a1-a9e4-4b57-b9e5-5374a38a1fa2"), Nombre = "Fotocopias", Estado = "Inactivo" });
-            Data.Add(new Rubro() { ID = Guid.Parse("ef5da2a1-a9e4-4b57-b9e5-5374a38a1fa2"), Nombre = "Bebidas", Estado = "Activo" });
+            this.context = context;
+
         }
         public IActionResult Index()
         {
-            return View(Data);
+            return View(context.Rubros.ToList());
         }
-        
-        public IActionResult Nuevo(string nombre, string estado)
+
+        public IActionResult Nuevo()
         {
-            Rubro nuevo = new Rubro();
-            nuevo.ID = Guid.NewGuid();
-            nuevo.Nombre = nombre;
-            nuevo.Estado = estado;
-            Data.Add(nuevo);
             return View();
         }
 
-        public IActionResult Editar(Guid id)
+        public IActionResult Guardar(string nombre, string estado)
         {
-            Rubro editar = Data.FirstOrDefault(i => i.ID == id);
+            Rubro nuevo = new Rubro();
+            nuevo.Nombre = nombre;
+            nuevo.Estado = estado;
+
+            context.Rubros.Add(nuevo);
+            context.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Editar(int id)
+        {
+            Rubro editar = context.Rubros.FirstOrDefault(i => i.ID == id);
             return View(editar);
         }
 
-        public IActionResult Actualizar(Guid id, string nombre, string estado)
+        public IActionResult Actualizar(int id, string nombre, string estado)
         {
-            Rubro editar = Data.FirstOrDefault(i => i.ID == id);
+            Rubro editar = context.Rubros.FirstOrDefault(i => i.ID == id);
             editar.Nombre = nombre;
             editar.Estado = estado;
-            return View("Index", Data);
+            context.SaveChanges();
+
+            return RedirectToAction("Index");
         }
 
         public IActionResult Nombre(string nombre)
