@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
 using KioskoFacturacion.Web.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace KioskoFacturacion.Web.Controllers
 {
+    [Authorize]
     public class RubrosController : Controller
     {
         private ApplicationDbContext context;

@@ -13,10 +13,10 @@ namespace KioskoFacturacion.Web.Models
         public string Descripcion { get; set; }
         public DateTime Vencimiento { get; set; }
         public bool NoVence { get; set; }
-        public string Rubro { get; set; }
+        public Rubro Rubro { get; set; }
         public long PrecioCosto { get; set; }
         public long PrecioVenta { get; set; }
         [Key]
-        public int codigo { get; set;}
+        public int codigo { get; set; }
     }
 }

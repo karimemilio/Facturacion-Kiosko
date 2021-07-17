@@ -4,14 +4,16 @@ using KioskoFacturacion.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace KioskoFacturacion.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210716203230_UsuarioPersonalizado")]
+    partial class UsuarioPersonalizado
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,15 +47,13 @@ namespace KioskoFacturacion.Web.Migrations
                     b.Property<long>("PrecioVenta")
                         .HasColumnType("bigint");
 
-                    b.Property<int?>("RubroID")
-                        .HasColumnType("int");
+                    b.Property<string>("Rubro")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Vencimiento")
                         .HasColumnType("datetime2");
 
                     b.HasKey("codigo");
-
-                    b.HasIndex("RubroID");
 
                     b.ToTable("Productos");
                 });
@@ -277,15 +277,6 @@ namespace KioskoFacturacion.Web.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("KioskoFacturacion.Web.Models.Producto", b =>
-                {
-                    b.HasOne("KioskoFacturacion.Web.Models.Rubro", "Rubro")
-                        .WithMany()
-                        .HasForeignKey("RubroID");
-
-                    b.Navigation("Rubro");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
