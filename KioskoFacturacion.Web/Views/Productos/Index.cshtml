@@ -1,1 +1,61 @@
-<h1>Se ha añadido con éxito</h1>
+@model IEnumerable<KioskoFacturacion.Web.Models.Producto>
+
+@{
+    ViewData["Title"] = "Productos";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <a asp-action="Alta">Crear producto nuevo</a>
+</p>
+
+<form asp-action="Buscar">
+    <label for="">Buscar por Nombre:</label>
+    <input type="text" name="filtroNombre" value="@ViewData["filtroNombre"]">
+    <input type="submit" value="Buscar">
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Codigo)
+            </th>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Marca)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rubro)
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Codigo
+                </td>
+                <td>
+                    @item.Nombre
+                </td>
+                <td>
+                    @item.Marca
+                </td>
+                <td>
+                    @item.Rubro.Nombre
+                </td>
+                <td>
+                    <a asp-action="Editar" asp-route-ID="@item.Codigo">Editar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -5,42 +5,45 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - KioskoFacturacion.Web</title>
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+
 </head>
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Facturacion" asp-action="Index"></a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/assets/logo_corto.png" alt="Menú inicio" width="30" height="26"
+                        class="d-inline-block align-top">
+                    Maxikiosco
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
+                    aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                <div class="collapse navbar-collapse d-lg-inline-flex justify-content-between" id="navbarNavDropdown">
+                    <ul class="nav nav-pills">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Facturacion"
-                                asp-action="Index"><img src="
-                                https://img.icons8.com/plasticine/100/000000/full-image.png" /></a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Facturacion" asp-action="Index">
+                                <img src="~/assets/facturacion.png" alt="Menú facturación"
+                                    class="d-inline-block align-top">
+                                Facturación </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Facturacion"
-                                asp-action="Index"><img
-                                    src="https://img.icons8.com/plasticine/100/000000/bill.png" /></a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Gestion" asp-action="Index">
+                                <img src="~/assets/gestion.png" alt="Menú facturación" class="d-inline-block align-top">
+                                Gestión </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Gestion" asp-action="Index"><img
-                                    src="https://img.icons8.com/plasticine/100/000000/refresh-barcode.png" /></a>
-                        </li>
-
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
             </div>
         </nav>
-        <p style="text-align:center; font-weight:bold; background-color:tomato">SITIO EN CONSTRUCCIÓN</p>
+        @*<p style="text-align:center; font-weight:bold; background-color:tomato">SITIO EN CONSTRUCCIÓN</p>*@
 
     </header>
     <div class="container">

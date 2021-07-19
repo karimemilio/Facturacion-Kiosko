@@ -1,44 +1,72 @@
 @{
         ViewData["Title"] = "Menú de Gestión";
 }
-
 <div class="container text-center">
         <h1 class="display-4">
                 <h1>@ViewData["Title"]</h1>
         </h1>
 
-        <div>
-                <div class="form-row">
-                        <div class="form-group col-md-2">
-                                <a asp-area="" asp-controller="" asp-action=""> <button type="button"
-                                                class="btn btn-success">Actualización de
-                                                precios</button></a>
+
+        <div class="container">
+                <div class="row justify-content-around">
+                        <div class="col-4 col-sm-offset-2">
+                                <div class="card" style="width: 18rem;">
+                                        <div class="card-body">
+                                                <a asp-controller="Productos" asp-action="Index">
+                                                        <h5 class="card-title">Productos</h5>
+                                                </a>
+                                                @*<h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>*@
+                                                <p class="card-text">Agregar, eliminar y modificar productos.
+                                                        Actualizar precios y stock.</p>
+                                                <a asp-controller="Productos" asp-action="Alta"
+                                                        class="card-link">Nuevo</a>
+                                                <a asp-controller="Gestion" asp-action="ModificarProducto"
+                                                        class="card-link">Modificar producto</a>
+                                        </div>
+                                </div>
                         </div>
-                        <div class="form-group col-md-2">
-                                <a asp-area="" asp-controller="" asp-action=""> <button type="button"
-                                                class="btn btn-success">Actualización de stock</button></a>
+                        <div class="col-4 col-sm-offset-2">
+                                <div class="card" style="width: 18rem;">
+                                        <div class="card-body">
+                                                <a asp-controller="Rubros" asp-action="Index">
+                                                        <h5 class="card-title">Rubros</h5>
+                                                </a>
+                                                @*<h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>*@
+                                                <p class="card-text">Agregar, eliminar y modificar rubros.</p><br>
+                                                <a asp-controller="Rubros" asp-action="Nuevo" class="card-link">Rubro
+                                                        nuevo</a>
+                                                <a asp-controller="Rubros" asp-action="Index" class="card-link">Ver
+                                                        rubros</a>
+                                        </div>
+                                </div>
                         </div>
                 </div>
-                <div class="form-row">
-                        <div class="form-group col-md-2">
-                                <a asp-area="" asp-controller="Productos" asp-action="Alta"> <button type="button"
-                                                class="btn btn-success">Agregar producto nuevo</button></a>
+                <br>
+                <div class="row justify-content-around">
+                        <div class="col-4 col-sm-offset-2">
+                                <div class="card" style="width: 18rem;">
+                                        <div class="card-body">
+                                                <a href="">
+                                                        <h5 class="card-title">Ventas</h5>
+                                                </a>
+                                                @*<h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>*@
+                                                <p class="card-text">Resumenes de ventas por fecha, producto, rubro,
+                                                        etc.</p><br>
+                                                <a href="#" class="card-link">Ventas de hoy</a>
+                                                <a href="#" class="card-link">Ventas de ayer</a>
+                                        </div>
+                                </div>
                         </div>
-                        <div class="form-group col-md-2">
-                                <a asp-area="" asp-controller="Gestion" asp-action="ModificarProducto"> <button
-                                                type="button" class="btn btn-success">Modificar producto
-                                                existente</button></a>
-                        </div>
-                </div>
-                <div class="form-row">
-                        <div class="form-group col-md-2">
-                                <a asp-area="" asp-controller="Rubros" asp-action="Index"> <button
-                                                style="height:62px;width:178px" type="button"
-                                                class="btn btn-success">Rubros</button></a>
-                        </div>
-                        <div class="form-group col-md-2">
-                                <a asp-area="" asp-controller="Gestion" asp-action="Listados"> <button type="button"
-                                                class="btn btn-success">Resumenes de ventas</button></a>
+                        <div class="col-4 col-sm-offset-2">
+                                <div class="card" style="width: 18rem;">
+                                        <div class="card-body">
+                                                <h5 class="card-title">Otras</h5>
+                                                @*<h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>*@
+                                                <p class="card-text">Configuraciones administrativas.</p><br><br>
+                                                <a href="#" class="card-link">Card link</a>
+                                                <a href="#" class="card-link">Another link</a>
+                                        </div>
+                                </div>
                         </div>
                 </div>
         </div>
