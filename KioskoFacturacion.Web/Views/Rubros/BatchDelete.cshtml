@@ -1,0 +1,56 @@
+@model IEnumerable<Rubro>
+@{
+    ViewData["Title"] = "Eliminar rubros";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h3>¿Está seguro de eliminar el siguiente lote de rubros?</h3>
+@{
+    Html.BeginForm("BatchConfirmed", "Rubros", FormMethod.Post, new { name = "tableForm" });
+}
+<table class="table table-sm table-hover col-auto">
+    <thead>
+        <tr>
+            <th style="font-weight: normal;">
+                <input type="checkbox" onClick="toggle(this)" checked />
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <input type="checkbox" name="deleteInputs" value="@item.ID" checked />
+                </td>
+                <td>
+                    @item.Nombre
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@{
+    Html.EndForm();
+}
+<div>
+    <a href="javascript:(function(){document.tableForm.submit();return void(0);})()">
+        <button style="display:inline-block" class="btn btn-danger">Borrar selección</button>
+    </a>
+    <a asp-controller="Rubros" asp-action="Index">
+        <button type="button" class="btn btn-warning">Atrás</button>
+    </a>
+</div>
+
+<script language="JavaScript">
+    function toggle(source) {
+        checkboxes = document.getElementsByName('deleteInputs');
+        for (var i = 0, n = checkboxes.length; i < n; i++) {
+            checkboxes[i].checked = source.checked;
+        }
+    }
+</script>

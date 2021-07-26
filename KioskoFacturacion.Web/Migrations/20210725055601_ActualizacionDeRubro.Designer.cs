@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KioskoFacturacion.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210718200642_CreacionInicial")]
-    partial class CreacionInicial
+    [Migration("20210725055601_ActualizacionDeRubro")]
+    partial class ActualizacionDeRubro
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,29 @@ namespace KioskoFacturacion.Web.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.7")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("KioskoFacturacion.Web.Models.Marca", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Estado")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nombre")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RubroID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("RubroID");
+
+                    b.ToTable("Marcas");
+                });
 
             modelBuilder.Entity("KioskoFacturacion.Web.Models.Producto", b =>
                 {
@@ -34,9 +57,8 @@ namespace KioskoFacturacion.Web.Migrations
                     b.Property<string>("Descripcion")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Marca")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("MarcaID")
+                        .HasColumnType("int");
 
                     b.Property<bool>("NoVence")
                         .HasColumnType("bit");
@@ -52,15 +74,12 @@ namespace KioskoFacturacion.Web.Migrations
                     b.Property<long>("PrecioVenta")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("RubroID")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("Vencimiento")
                         .HasColumnType("datetime2");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("RubroID");
+                    b.HasIndex("MarcaID");
 
                     b.ToTable("Productos");
                 });
@@ -76,6 +95,7 @@ namespace KioskoFacturacion.Web.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nombre")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
@@ -283,7 +303,7 @@ namespace KioskoFacturacion.Web.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("KioskoFacturacion.Web.Models.Producto", b =>
+            modelBuilder.Entity("KioskoFacturacion.Web.Models.Marca", b =>
                 {
                     b.HasOne("KioskoFacturacion.Web.Models.Rubro", "Rubro")
                         .WithMany()
@@ -292,6 +312,17 @@ namespace KioskoFacturacion.Web.Migrations
                         .IsRequired();
 
                     b.Navigation("Rubro");
+                });
+
+            modelBuilder.Entity("KioskoFacturacion.Web.Models.Producto", b =>
+                {
+                    b.HasOne("KioskoFacturacion.Web.Models.Marca", "Marca")
+                        .WithMany()
+                        .HasForeignKey("MarcaID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Marca");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -1,0 +1,34 @@
+@model KioskoFacturacion.Web.Models.Rubro
+
+@{
+    ViewData["Title"] = "Eliminar rubro";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h3>¿Está seguro de eliminar el rubro?</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-1">
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+        <dd class="col-sm-11">
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+        <dt class="col-sm-1">
+            @Html.DisplayNameFor(model => model.Estado)
+        </dt>
+        <dd class="col-sm-11">
+            @Html.DisplayFor(model => model.Estado)
+        </dd>
+    </dl>
+    <hr />
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="ID" />
+        <input type="submit" value="Eliminar" class="btn btn-danger" />
+        <a asp-controller="Rubros" asp-action="Index">
+            <button type="button" class="btn btn-warning">Atrás</button>
+        </a>
+    </form>
+</div>

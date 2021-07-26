@@ -30,7 +30,7 @@
                 @Html.DisplayNameFor(model => model.Marca)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Rubro)
+                @Html.DisplayNameFor(model => model.Marca.Rubro.Nombre)
             </th>
             <th>
             </th>
@@ -47,10 +47,10 @@
                     @item.Nombre
                 </td>
                 <td>
-                    @item.Marca
+                    @item.Marca.Nombre
                 </td>
                 <td>
-                    @item.Rubro.Nombre
+                    @item.Marca.Rubro
                 </td>
                 <td>
                     <a asp-action="Editar" asp-route-ID="@item.Codigo">Editar</a>

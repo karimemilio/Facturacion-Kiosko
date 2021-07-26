@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using System.Net.Mail;
 
 namespace KioskoFacturacion.Web.Areas.Identity.Pages.Account
 {
@@ -44,9 +45,8 @@ namespace KioskoFacturacion.Web.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
-            [EmailAddress]
-            [Display(Name = "Mail")]
-            public string Email { get; set; }
+            [Display(Name = "Mail / Usuario")]
+            public string UserName { get; set; }
 
             [Required]
             [DataType(DataType.Password)]
@@ -82,9 +82,18 @@ namespace KioskoFacturacion.Web.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
+                var userName = Input.UserName;
+                if (IsValidEmail(Input.UserName))
+                {
+                    var user = await _userManager.FindByEmailAsync(Input.UserName);
+                    if (user != null)
+                    {
+                        userName = user.UserName;
+                    }
+                }
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(userName, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
@@ -109,5 +118,19 @@ namespace KioskoFacturacion.Web.Areas.Identity.Pages.Account
             // If we got this far, something failed, redisplay form
             return Page();
         }
+
+        public bool IsValidEmail(string emailaddress)
+        {
+            try
+            {
+                MailAddress m = new MailAddress(emailaddress);
+                return true;
+            }
+            catch (FormatException)
+            {
+                return false;
+            }
+        }
+
     }
 }

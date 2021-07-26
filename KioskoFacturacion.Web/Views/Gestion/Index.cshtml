@@ -5,11 +5,9 @@
         <h1 class="display-4">
                 <h1>@ViewData["Title"]</h1>
         </h1>
-
-
         <div class="container">
                 <div class="row justify-content-around">
-                        <div class="col-4 col-sm-offset-2">
+                        <div class="col-4">
                                 <div class="card" style="width: 18rem;">
                                         <div class="card-body">
                                                 <a asp-controller="Productos" asp-action="Index">
@@ -25,25 +23,26 @@
                                         </div>
                                 </div>
                         </div>
-                        <div class="col-4 col-sm-offset-2">
+                        <div class="col-4">
                                 <div class="card" style="width: 18rem;">
                                         <div class="card-body">
                                                 <a asp-controller="Rubros" asp-action="Index">
-                                                        <h5 class="card-title">Rubros</h5>
+                                                        <h5 class="card-title">Rubros y Marcas</h5>
                                                 </a>
                                                 @*<h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>*@
-                                                <p class="card-text">Agregar, eliminar y modificar rubros.</p><br>
-                                                <a asp-controller="Rubros" asp-action="Nuevo" class="card-link">Rubro
-                                                        nuevo</a>
+                                                <p class="card-text">Agregar, eliminar y modificar rubros. Agregar,
+                                                        eliminar y modificar marcas.</p>
                                                 <a asp-controller="Rubros" asp-action="Index" class="card-link">Ver
                                                         rubros</a>
+                                                <a asp-controller="Marcas" asp-action="Index" class="card-link">Ver
+                                                        marcas</a>
                                         </div>
                                 </div>
                         </div>
                 </div>
                 <br>
                 <div class="row justify-content-around">
-                        <div class="col-4 col-sm-offset-2">
+                        <div class="col-4">
                                 <div class="card" style="width: 18rem;">
                                         <div class="card-body">
                                                 <a href="">
@@ -52,19 +51,19 @@
                                                 @*<h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>*@
                                                 <p class="card-text">Resumenes de ventas por fecha, producto, rubro,
                                                         etc.</p><br>
-                                                <a href="#" class="card-link">Ventas de hoy</a>
                                                 <a href="#" class="card-link">Ventas de ayer</a>
+                                                <a href="#" class="card-link">Ventas de hoy</a>
                                         </div>
                                 </div>
                         </div>
-                        <div class="col-4 col-sm-offset-2">
+                        <div class="col-4">
                                 <div class="card" style="width: 18rem;">
                                         <div class="card-body">
                                                 <h5 class="card-title">Otras</h5>
                                                 @*<h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>*@
                                                 <p class="card-text">Configuraciones administrativas.</p><br><br>
-                                                <a href="#" class="card-link">Card link</a>
-                                                <a href="#" class="card-link">Another link</a>
+                                                <a href="#" class="card-link">Estadísticas</a>
+                                                <a href="#" class="card-link">Configuraciones</a>
                                         </div>
                                 </div>
                         </div>

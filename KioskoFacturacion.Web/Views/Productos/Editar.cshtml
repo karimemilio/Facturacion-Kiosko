@@ -1,7 +1,7 @@
-@model Rubro
+@model Producto
 
 @{
-    ViewData["Title"] = "Rubros - Editar";
+    ViewData["Title"] = "Productos - Editar";
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -17,10 +17,10 @@
                     <input type="text" asp-for="Nombre">
                 </div>
                 <div class="form-group">
-                    <label asp-for="Estado">Estado</label>
-                    <select asp-for="Estado">
-                        <option value="Activo">Activo</option>
-                        <option value="Inactivo">Inactivo</option>
+                    <label asp-for="Marca">Marca</label>
+                    <select asp-for="Marca">
+@*                        <option value="Activo">Activo</option>
+                        <option value="Inactivo">Inactivo</option>*@
                     </select>
                 </div>
             </div>

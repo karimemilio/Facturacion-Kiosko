@@ -17,8 +17,9 @@
             <input asp-for="Nombre" class="form-control">
         </div>
         <div class="form-group col-md-6">
-            <label asp-for="Marca" class="control-label"></label>
-            <input asp-for="Marca" class="form-control">
+            @Html.LabelFor(model => model.MarcaID, htmlAttributes: new { @class = "control-label"})
+            @Html.DropDownList("MarcaID", ViewBag.marcasList, "Elegir la marca", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.MarcaID, "", new { @class = "text-danger"})
         </div>
     </div>
     <div class="form-group">
@@ -28,17 +29,17 @@
     <div class="form-row">
         <div class="form-group col-md-6">
             <label asp-for="Vencimiento" class="control-label"></label>
-            <input asp-for="Vencimiento" class="form-control">
+            <input asp-for="Vencimiento" class="form-control" id="vencimiento">
         </div>
         <div class="form-check">
             <label asp-for="NoVence" class="control-label"></label>
-            <input asp-for="NoVence" class="form-control">
+            <input asp-for="NoVence" class="form-control" id="novence">
         </div>
-        <div class="form-group col-md-4">
+        @*<div class="form-group col-md-4">
             @Html.LabelFor(model => model.RubroID, htmlAttributes: new { @class = "control-label"})
             @Html.DropDownList("RubroID", ViewBag.RubrosList, "Elegir un rubro", new { @class = "form-control"})
             @Html.ValidationMessageFor(model => model.RubroID, "", new { @class = "text-danger"})
-        </div>
+            </div>*@
     </div>
     <div class="form-row">
         <div class="form-group col-md-2">
@@ -52,3 +53,19 @@
     </div>
     <input type="submit" value="Guardar" class="btn btn-primary" />
 </form>
+
+
+@section Scripts {
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#novence").click(function () {
+            if ($(this).is(":checked")) {
+                $("#vencimiento").attr("disabled", true);
+                $("#vencimiento").val('');
+            }
+            else
+                $("#vencimiento").attr("disabled", false);
+        });
+    });
+</script>
+}
