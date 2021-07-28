@@ -66,11 +66,12 @@ namespace KioskoFacturacion.Web.Controllers
             return View(editar);
         }
 
-        public IActionResult Actualizar(int id, string nombre, string estado)
+        public IActionResult Actualizar(int id, string nombre, string estado, int rubroID)
         {
             Marca editar = context.Marcas.FirstOrDefault(i => i.ID == id);
             editar.Nombre = nombre;
             editar.Estado = estado;
+            editar.RubroID = rubroID;
             context.SaveChanges();
 
             return RedirectToAction("Index");

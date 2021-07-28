@@ -2,7 +2,7 @@
 
 namespace KioskoFacturacion.Web.Migrations
 {
-    public partial class ActualizacionProducto8 : Migration
+    public partial class SinGestion : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

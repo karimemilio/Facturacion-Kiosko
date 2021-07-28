@@ -40,14 +40,20 @@
                         <input asp-for="Input.ConfirmPassword" class="form-control" />
                         <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                     </div>
-                    <button type="submit" class="btn btn-primary">Registrar</button>
-                    <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login"><button type="button"
-                            class="btn btn-link">Ya tengo una cuenta</button></a>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Registrar</button>
+                    </div>
+                    <div class="form-group">
+                        <p>
+                            <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl">Ya tengo una cuenta</a>
+                        </p>
+                    </div>
                 </form>
             </section>
         </div>
         <div class="col">
-            <img src="~/assets/logo.png" alt="" width="400" height="430">
+            <a asp-controller="Home" asp-action="Index" class="card-link"><img src="~/assets/logo.png" alt=""
+                    width="400" height="430"></a>
         </div>
         <div class="col">
         </div>

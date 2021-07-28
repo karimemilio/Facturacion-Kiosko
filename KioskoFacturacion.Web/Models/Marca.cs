@@ -6,15 +6,17 @@ namespace KioskoFacturacion.Web.Models
     public class Marca
     {
         [Key]
+        [Required]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
         [Required]
         public string Nombre { get; set; }
 
         public string Estado { get; set; }
-        public Rubro Rubro { get; set; }
-        [Required]
 
+        public Rubro Rubro { get; set; }
+
+        [Required]
         //[ForeignKey("RubroID")]
         public int RubroID { get; set; }
 

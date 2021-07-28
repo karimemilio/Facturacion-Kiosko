@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -6,38 +7,42 @@ namespace KioskoFacturacion.Web.Models
 {
     public class Producto
     {
+        [Key]
         [Required]
-        [MaxLength(100)]
-        [Display(Name = "Producto")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int ID { get; set; }
+
+        [Required]
+        public uint Codigo { get; set; }
+
+        [Required]
         public string Nombre { get; set; }
 
-        [Display(Name = "Marca")]
         public Marca Marca { get; set; }
 
-        [Display(Name = "MarcaID")]
+        [Required]
         //[ForeignKey("MarcaID")]
         public int MarcaID { get; set; }
 
         public string Descripcion { get; set; }
 
-        [DataType(DataType.Date)]
-        public DateTime Vencimiento { get; set; }
+        public string Estado { get; set; }
 
-        [Display(Name = "No vence")]
-        public bool NoVence { get; set; }
+        /*[DataType(DataType.Date)]
+       public DateTime Vencimiento { get; set; }
 
+       [Display(Name = "No vence")]
+       public bool NoVence { get; set; }
+*/
         [Display(Name = "Precio de costo")]
-        public long PrecioCosto { get; set; }
+        public float PrecioCosto { get; set; }
+        [NotMapped]
+        public List<float> PreciosCosto { get; set; }
 
         [Display(Name = "Precio de venta")]
         [Required]
-        public long PrecioVenta { get; set; }
-
-        [Display(Name = "Codigo")]
-        public int Codigo { get; set; }
-        // public List<long> PreciosHistoricos { get; set; }
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ID { get; set; }
+        public float PrecioVenta { get; set; }
+        [NotMapped]
+        public List<float> PreciosVenta { get; set; }
     }
 }

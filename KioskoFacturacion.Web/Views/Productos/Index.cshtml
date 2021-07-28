@@ -1,24 +1,32 @@
-@model IEnumerable<KioskoFacturacion.Web.Models.Producto>
+@model IEnumerable<Producto>
 
 @{
     ViewData["Title"] = "Productos";
 }
-
-<h1>@ViewData["Title"]</h1>
-
-<p>
-    <a asp-action="Alta">Crear producto nuevo</a>
-</p>
-
-<form asp-action="Buscar">
-    <label for="">Buscar por Nombre:</label>
-    <input type="text" name="filtroNombre" value="@ViewData["filtroNombre"]">
-    <input type="submit" value="Buscar">
+<div class="container text-center">
+    <h1>@ViewData["Title"]</h1>
+</div>
+<form asp-action="Index" method="get">
+    <div class="input-group input-group-sm mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-sm">Buscar</span>
+        </div>
+        <input type="search" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+            name="filter" value="@ViewData["CurrentFilter"]">
+        &nbsp;
+        <input type=image src="~/assets/search.gif" alt="Submit" width="20" height="20"> |
+        <a asp-action="Index"><img src="~/assets/back.png" alt="Borrar búsqueda" width="20" height="20"></a>
+    </div>
 </form>
-
-<table class="table">
+@{
+    Html.BeginForm("BatchDelete", "Productos", FormMethod.Post, new { name = "tableForm" });
+}
+<table class="table table-sm table-hover">
     <thead>
         <tr>
+            <th style="font-weight: normal;">
+                <input type="checkbox" onClick="toggle(this)" />
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Codigo)
             </th>
@@ -30,7 +38,7 @@
                 @Html.DisplayNameFor(model => model.Marca)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Marca.Rubro.Nombre)
+                @Html.DisplayNameFor(model => model.Marca.Rubro)
             </th>
             <th>
             </th>
@@ -41,6 +49,9 @@
         {
             <tr>
                 <td>
+                    <input type="checkbox" name="deleteInputs" value="@item.ID" />
+                </td>
+                <td>
                     @item.Codigo
                 </td>
                 <td>
@@ -50,12 +61,39 @@
                     @item.Marca.Nombre
                 </td>
                 <td>
-                    @item.Marca.Rubro
+                    @item.Marca.Rubro.Nombre
                 </td>
                 <td>
-                    <a asp-action="Editar" asp-route-ID="@item.Codigo">Editar</a>
+                    <a asp-action="Editar" asp-route-ID="@item.ID">
+                        <button type="button" class="btn btn-warning btn-sm">Editar</button>
+                    </a>
+                    <a asp-action="Eliminar" asp-route-ID="@item.ID">
+                        <button type="button" class="btn btn-danger btn-sm">Eliminar</button>
+                    </a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+@{
+    Html.EndForm();
+}
+<div>
+    <a asp-action="Alta">
+        <button style="display:inline-block" class="btn btn-success">Crear nuevo
+        </button></a>
+    <a href="javascript:(function(){document.tableForm.submit();return void(0);})()">
+        <button style="display:inline-block" class="btn btn-danger">Borrar selección</button>
+    </a>
+    <a asp-controller="Home" asp-action="Gestion">
+        <button type="button" class="btn btn-warning">Atrás</button>
+    </a>
+</div>
+<script language="JavaScript">
+    function toggle(source) {
+        checkboxes = document.getElementsByName('deleteInputs');
+        for (var i = 0, n = checkboxes.length; i < n; i++) {
+            checkboxes[i].checked = source.checked;
+        }
+    }
+</script>

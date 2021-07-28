@@ -89,6 +89,15 @@ namespace KioskoFacturacion.Web.Controllers
 
             return View(rubro);
         }
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var rubro = await context.Rubros.FindAsync(id);
+            context.Rubros.Remove(rubro);
+            await context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
 
         [HttpPost]
         public async Task<IActionResult> BatchDelete(int[] deleteInputs)

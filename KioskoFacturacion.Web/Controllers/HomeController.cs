@@ -1,13 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using KioskoFacturacion.Web.Models;
 using KioskoFacturacion.Web.Data;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace KioskoFacturacion.Web.Controllers
 {
@@ -24,7 +17,10 @@ namespace KioskoFacturacion.Web.Controllers
         {
             return View();
         }
-
-
+        [Authorize]
+        public IActionResult Gestion()
+        {
+            return View();
+        }
     }
 }

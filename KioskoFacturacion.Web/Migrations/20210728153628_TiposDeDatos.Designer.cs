@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KioskoFacturacion.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210726034749_ActualizacionRequired")]
-    partial class ActualizacionRequired
+    [Migration("20210728153628_TiposDeDatos")]
+    partial class TiposDeDatos
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -52,31 +52,27 @@ namespace KioskoFacturacion.Web.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Codigo")
-                        .HasColumnType("int");
+                    b.Property<long>("Codigo")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Descripcion")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Estado")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("MarcaID")
                         .HasColumnType("int");
 
-                    b.Property<bool>("NoVence")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("PrecioCosto")
-                        .HasColumnType("bigint");
+                    b.Property<float>("PrecioCosto")
+                        .HasColumnType("real");
 
-                    b.Property<long>("PrecioVenta")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("Vencimiento")
-                        .HasColumnType("datetime2");
+                    b.Property<float>("PrecioVenta")
+                        .HasColumnType("real");
 
                     b.HasKey("ID");
 

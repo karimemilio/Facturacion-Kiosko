@@ -4,14 +4,16 @@ using KioskoFacturacion.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace KioskoFacturacion.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210727032215_ListadosPrecios")]
+    partial class ListadosPrecios
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,27 +52,30 @@ namespace KioskoFacturacion.Web.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<long>("Codigo")
-                        .HasColumnType("bigint");
+                    b.Property<int>("Codigo")
+                        .HasColumnType("int");
 
                     b.Property<string>("Descripcion")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Estado")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("MarcaID")
                         .HasColumnType("int");
 
+                    b.Property<bool>("NoVence")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<float>("PrecioCosto")
-                        .HasColumnType("real");
+                    b.Property<long>("PrecioCosto")
+                        .HasColumnType("bigint");
 
-                    b.Property<float>("PrecioVenta")
-                        .HasColumnType("real");
+                    b.Property<long>("PrecioVenta")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("Vencimiento")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("ID");
 

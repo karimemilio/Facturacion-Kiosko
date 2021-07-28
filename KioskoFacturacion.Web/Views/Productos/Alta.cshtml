@@ -1,71 +1,84 @@
 @model KioskoFacturacion.Web.Models.Producto
 @{
-    ViewData["Title"] = "Menú de Gestión";
+    ViewData["Title"] = "Nuevo Producto";
 }
 
-<div class="text-center">
-    <h1 class="display-4">
-        <h1> @ViewData["Title"] </h1>
-    </h1>
-    <h2>Ingresar producto nuevo</h2>
-</div>
-
+<h1>@ViewData["Title"]</h1>
+<br>
 <form asp-action="Alta" method="post">
     <div class="form-row">
         <div class="form-group col-md-6">
-            <label asp-for="Nombre" class="control-label"></label>
-            <input asp-for="Nombre" class="form-control">
+            <label asp-for="Nombre" class="label-control"></label>
+            <input asp-for="Nombre" class="form-control" />
         </div>
-        <div class="form-group col-md-6">
-            @Html.LabelFor(model => model.MarcaID, htmlAttributes: new { @class = "control-label"})
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            @Html.LabelFor(model => model.Marca, htmlAttributes: new { @class = "control-label"})
             @Html.DropDownList("MarcaID", ViewBag.marcasList, "Elegir la marca", new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.MarcaID, "", new { @class = "text-danger"})
         </div>
-    </div>
-    <div class="form-group">
-        <label asp-for="Descripcion" class="control-label"></label>
-        <input asp-for="Descripcion" class="form-control">
+        <div class="form-group col-md-3">
+            <label asp-for="Codigo" class="label-control"></label>
+            <input asp-for="Codigo" class="form-control" />
+        </div>
     </div>
     <div class="form-row">
         <div class="form-group col-md-6">
-            <label asp-for="Vencimiento" class="control-label"></label>
-            <input asp-for="Vencimiento" class="form-control" id="vencimiento">
+            <label asp-for="Descripcion" class="control-label"></label>
+            <input asp-for="Descripcion" class="form-control">
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-1 col-form-label">
+            @Html.DisplayNameFor(model => model.Estado)
+        </div>
+        <div class="col-sm-6">
+            <select asp-for="Estado" class="form-control">
+                <option value="Activo">Activo</option>
+                <option value="Inactivo">Inactivo</option>
+            </select>
+        </div>
+    </div>
+    @*<div class="form-row">
+        <div class="form-group col-md-6">
+        <label asp-for="Vencimiento" class="control-label"></label>
+        <input asp-for="Vencimiento" class="form-control" id="vencimiento">
         </div>
         <div class="form-check">
-            <label asp-for="NoVence" class="control-label"></label>
-            <input asp-for="NoVence" class="form-control" id="novence">
+        <label asp-for="NoVence" class="control-label"></label>
+        <input asp-for="NoVence" class="form-control" id="novence">
         </div>
-        @*<div class="form-group col-md-4">
-            @Html.LabelFor(model => model.RubroID, htmlAttributes: new { @class = "control-label"})
-            @Html.DropDownList("RubroID", ViewBag.RubrosList, "Elegir un rubro", new { @class = "form-control"})
-            @Html.ValidationMessageFor(model => model.RubroID, "", new { @class = "text-danger"})
-            </div>*@
-    </div>
+        </div>*@
     <div class="form-row">
-        <div class="form-group col-md-2">
+        <div class="form-group col-md-3">
             <label asp-for="PrecioCosto" class="control-label"></label>
             <input asp-for="PrecioCosto" class="form-control">
         </div>
-        <div class="form-group col-md-2">
+        <div class="form-group col-md-3">
             <label asp-for="PrecioVenta" class="control-label"></label>
             <input asp-for="PrecioVenta" class="form-control">
         </div>
     </div>
-    <input type="submit" value="Guardar" class="btn btn-primary" />
+    <span style="display: inline;">
+        <button type="submit" class="btn btn-success">Guardar</button>
+        <a asp-controller="Productos" asp-action="Index">
+            <button type="button" class="btn btn-warning">Atrás</button>
+        </a>
+    </span>
 </form>
-
-
-@section Scripts {
-<script type="text/javascript">
+@*
+    @section Scripts {
+    <script type="text/javascript">
     $(document).ready(function () {
-        $("#novence").click(function () {
-            if ($(this).is(":checked")) {
-                $("#vencimiento").attr("disabled", true);
-                $("#vencimiento").val('');
-            }
-            else
-                $("#vencimiento").attr("disabled", false);
-        });
+    $("#novence").click(function () {
+    if ($(this).is(":checked")) {
+    $("#vencimiento").attr("disabled", true);
+    $("#vencimiento").val('');
+    }
+    else
+    $("#vencimiento").attr("disabled", false);
     });
-</script>
-}
+    });
+    </script>
+    }*@

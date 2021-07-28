@@ -10,15 +10,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KioskoFacturacion.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210724213345_ActualizacionProducto8")]
-    partial class ActualizacionProducto8
+    [Migration("20210727183928_ModificaProducto2")]
+    partial class ModificaProducto2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.7")
+                .HasAnnotation("ProductVersion", "5.0.8")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("KioskoFacturacion.Web.Models.Marca", b =>
@@ -32,6 +32,7 @@ namespace KioskoFacturacion.Web.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nombre")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("RubroID")
@@ -57,25 +58,21 @@ namespace KioskoFacturacion.Web.Migrations
                     b.Property<string>("Descripcion")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Estado")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("MarcaID")
                         .HasColumnType("int");
 
-                    b.Property<bool>("NoVence")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("PrecioCosto")
                         .HasColumnType("bigint");
 
                     b.Property<long>("PrecioVenta")
                         .HasColumnType("bigint");
-
-                    b.Property<DateTime>("Vencimiento")
-                        .HasColumnType("datetime2");
 
                     b.HasKey("ID");
 
@@ -95,6 +92,7 @@ namespace KioskoFacturacion.Web.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nombre")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
