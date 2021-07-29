@@ -4,32 +4,37 @@
     ViewData["Title"] = "Editar rubro";
 }
 
-<h1>@ViewData["Title"]</h1>
+<div class="container text-center">
+    <h1>@ViewData["Title"]</h1>
+</div>
+<br>
 <div>
     <hr />
     <form asp-action="Actualizar" method="post">
-        <input type="hidden" asp-for="ID">
-        <div class="form-group row">
-            <div class="col-sm-1 col-form-label">
-                @Html.DisplayNameFor(model => model.Nombre)
+        <div class="form-custom">
+            <input type="hidden" asp-for="ID">
+            <div class="form-group row">
+                <div class="col-sm-1 col-form-label">
+                    @Html.DisplayNameFor(model => model.Nombre)
+                </div>
+                <div class="col-sm-6">
+                    <input type="text" asp-for="Nombre" class="form-control">
+                </div>
             </div>
-            <div class="col-sm-6">
-                <input type="text" asp-for="Nombre" class="form-control">
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-sm-1 col-form-label">
-                @Html.DisplayNameFor(model => model.Estado)
-            </div>
-            <div class="col-sm-6">
-                <select asp-for="Estado" class="form-control">
-                    <option value="Activo">Activo</option>
-                    <option value="Inactivo">Inactivo</option>
-                </select>
+            <div class="form-group row">
+                <div class="col-sm-1 col-form-label">
+                    @Html.DisplayNameFor(model => model.Estado)
+                </div>
+                <div class="col-sm-6">
+                    <select asp-for="Estado" class="form-control">
+                        <option value="Activo">Activo</option>
+                        <option value="Inactivo">Inactivo</option>
+                    </select>
+                </div>
             </div>
         </div>
         <hr />
-        <button type="submit" value="Guardar" class="btn btn-success">Guardar</button>
+        <button type="submit" value="Guardar" class="btn btn-success-custom">Guardar</button>
         <a asp-controller="Rubros" asp-action="Index">
             <button type="button" class="btn btn-warning">Atrás</button>
         </a>

@@ -2,15 +2,17 @@
 @{
     ViewData["Title"] = "Nueva marca";
 }
-
-<h1>@ViewData["Title"]</h1>
+<div class="container text-center">
+    <h1>@ViewData["Title"]</h1>
+</div>
 <br>
 <form asp-action="Guardar" method="post">
-    <div class="form-row">
+    <div class="form-row form-custom">
         <div class="form-group col-md-6">
             <label asp-for="Nombre" class="label-control"></label>
             <input asp-for="Nombre" class="form-control">
         </div>
+        <br>
         <div class="form-group col-md-3">
             <label for="estado">Estado</label>
             <select id="estado" name="estado" class="form-control">
@@ -18,14 +20,16 @@
                 <option>Inactivo</option>
             </select>
         </div>
+        <br>
         <div class="form-group col-md-3">
             @Html.Label("Rubro")
             @Html.DropDownList("RubroID", ViewBag.RubrosList, "", new { @class = "form-control"})
             @Html.ValidationMessageFor(model => model.RubroID, "", new { @class = "text-danger"})
         </div>
     </div>
+    <hr>
     <span style="display: inline;">
-        <button type="submit" class="btn btn-success">Guardar</button>
+        <button type="submit" class="btn btn-success-custom">Guardar</button>
         <a asp-controller="Marcas" asp-action="Index">
             <button type="button" class="btn btn-warning">Atrás</button>
         </a></span>

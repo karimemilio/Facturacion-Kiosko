@@ -2,12 +2,12 @@
 @{
     ViewData["Title"] = "Nuevo Rubro";
 }
-
-<h1>@ViewData["Title"]</h1>
-<br>
+<div class="container text-center">
+    <h1>@ViewData["Title"]</h1>
+</div>
 <form asp-action="Guardar" method="post">
-    <div class="form-row">
-        <div class="form-group col-md-6">
+    <div class="form-row form-custom">
+        <div class=" form-group col-md-6">
             <label asp-for="Nombre" class="label-control"></label>
             <input asp-for="Nombre" class="form-control" />
         </div>
@@ -20,9 +20,11 @@
         </div>
     </div>
     <span style="display: inline;">
-        <button type="submit" class="btn btn-success">Guardar</button>
+        <br>
+        <button type="submit" class="btn btn-success-custom">Guardar</button>
         <a asp-controller="Rubros" asp-action="Index">
             <button type="button" class="btn btn-warning">Atrás</button>
         </a>
     </span>
+
 </form>

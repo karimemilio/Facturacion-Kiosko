@@ -4,12 +4,14 @@
     ViewData["Title"] = "Eliminar producto";
 }
 
-<h1>@ViewData["Title"]</h1>
+<div class="container text-center">
+    <h1>@ViewData["Title"]</h1>
+</div>
 
 <h3>¿Está seguro de eliminar el producto?</h3>
 <div>
     <hr />
-    <dl class="row">
+    <dl class="row form-custom">
         <dt class="col-sm-1">
             @Html.DisplayNameFor(model => model.Nombre)
         </dt>
@@ -26,8 +28,8 @@
     <hr />
     <form asp-action="Eliminar">
         <input type="hidden" asp-for="ID" />
-        <input type="submit" value="Eliminar" class="btn btn-danger" />
-        <a asp-controller="Marcas" asp-action="Index">
+        <input type="submit" value="Eliminar" class="btn btn-danger-success" />
+        <a asp-controller="Productos" asp-action="Index">
             <button type="button" class="btn btn-warning">Atrás</button>
         </a>
     </form>

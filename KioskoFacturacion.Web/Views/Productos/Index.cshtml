@@ -6,6 +6,7 @@
 <div class="container text-center">
     <h1>@ViewData["Title"]</h1>
 </div>
+<br>
 <form asp-action="Index" method="get">
     <div class="input-group input-group-sm mb-3">
         <div class="input-group-prepend">
@@ -68,7 +69,7 @@
                         <button type="button" class="btn btn-warning btn-sm">Editar</button>
                     </a>
                     <a asp-action="Eliminar" asp-route-ID="@item.ID">
-                        <button type="button" class="btn btn-danger btn-sm">Eliminar</button>
+                        <button type="button" class="btn btn-danger-success btn-sm">Eliminar</button>
                     </a>
                 </td>
             </tr>
@@ -80,10 +81,10 @@
 }
 <div>
     <a asp-action="Alta">
-        <button style="display:inline-block" class="btn btn-success">Crear nuevo
+        <button style="display:inline-block" class="btn btn-success-custom">Crear nuevo
         </button></a>
     <a href="javascript:(function(){document.tableForm.submit();return void(0);})()">
-        <button style="display:inline-block" class="btn btn-danger">Borrar selección</button>
+        <button style="display:inline-block" class="btn btn-danger-success">Borrar selección</button>
     </a>
     <a asp-controller="Home" asp-action="Gestion">
         <button type="button" class="btn btn-warning">Atrás</button>

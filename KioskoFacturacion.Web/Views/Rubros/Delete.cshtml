@@ -4,12 +4,16 @@
     ViewData["Title"] = "Eliminar rubro";
 }
 
-<h1>@ViewData["Title"]</h1>
+
+<div class="container text-center">
+    <h1>@ViewData["Title"]</h1>
+</div>
+<br>
 
 <h3>¿Está seguro de eliminar el rubro?</h3>
 <div>
     <hr />
-    <dl class="row">
+    <dl class="row form-custom">
         <dt class="col-sm-1">
             @Html.DisplayNameFor(model => model.Nombre)
         </dt>
@@ -26,7 +30,7 @@
     <hr />
     <form asp-action="Delete">
         <input type="hidden" asp-for="ID" />
-        <input type="submit" value="Eliminar" class="btn btn-danger" />
+        <input type="submit" value="Eliminar" class="btn btn-danger-success" />
         <a asp-controller="Rubros" asp-action="Index">
             <button type="button" class="btn btn-warning">Atrás</button>
         </a>

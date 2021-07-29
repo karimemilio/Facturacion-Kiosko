@@ -2,66 +2,70 @@
 @{
     ViewData["Title"] = "Nuevo Producto";
 }
-
-<h1>@ViewData["Title"]</h1>
+<div class="container text-center">
+    <h1>@ViewData["Title"]</h1>
+</div>
 <br>
 <form asp-action="Alta" method="post">
-    <div class="form-row">
-        <div class="form-group col-md-6">
-            <label asp-for="Nombre" class="label-control"></label>
-            <input asp-for="Nombre" class="form-control" />
+    <div class="form-custom">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label asp-for="Nombre" class="label-control"></label>
+                <input asp-for="Nombre" class="form-control" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                @Html.LabelFor(model => model.Marca, htmlAttributes: new { @class = "control-label"})
+                @Html.DropDownList("MarcaID", ViewBag.marcasList, "Elegir la marca", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.MarcaID, "", new { @class = "text-danger"})
+            </div>
+            <div class="form-group col-md-3">
+                <label asp-for="Codigo" class="label-control"></label>
+                <input asp-for="Codigo" class="form-control" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label asp-for="Descripcion" class="control-label"></label>
+                <input asp-for="Descripcion" class="form-control">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                @Html.DisplayNameFor(model => model.Estado)
+            </div>
+            <div class="form-group col-md-3">
+                <select asp-for="Estado" class="form-control">
+                    <option value="Activo">Activo</option>
+                    <option value="Inactivo">Inactivo</option>
+                </select>
+            </div>
+        </div>
+        @*<div class="form-row">
+            <div class="form-group col-md-6">
+            <label asp-for="Vencimiento" class="control-label"></label>
+            <input asp-for="Vencimiento" class="form-control" id="vencimiento">
+            </div>
+            <div class="form-check">
+            <label asp-for="NoVence" class="control-label"></label>
+            <input asp-for="NoVence" class="form-control" id="novence">
+            </div>
+            </div>*@
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label asp-for="PrecioCosto" class="control-label"></label>
+                <input asp-for="PrecioCosto" class="form-control">
+            </div>
+            <div class="form-group col-md-3">
+                <label asp-for="PrecioVenta" class="control-label"></label>
+                <input asp-for="PrecioVenta" class="form-control">
+            </div>
         </div>
     </div>
-    <div class="form-row">
-        <div class="form-group col-md-3">
-            @Html.LabelFor(model => model.Marca, htmlAttributes: new { @class = "control-label"})
-            @Html.DropDownList("MarcaID", ViewBag.marcasList, "Elegir la marca", new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.MarcaID, "", new { @class = "text-danger"})
-        </div>
-        <div class="form-group col-md-3">
-            <label asp-for="Codigo" class="label-control"></label>
-            <input asp-for="Codigo" class="form-control" />
-        </div>
-    </div>
-    <div class="form-row">
-        <div class="form-group col-md-6">
-            <label asp-for="Descripcion" class="control-label"></label>
-            <input asp-for="Descripcion" class="form-control">
-        </div>
-    </div>
-    <div class="form-group row">
-        <div class="col-sm-1 col-form-label">
-            @Html.DisplayNameFor(model => model.Estado)
-        </div>
-        <div class="col-sm-6">
-            <select asp-for="Estado" class="form-control">
-                <option value="Activo">Activo</option>
-                <option value="Inactivo">Inactivo</option>
-            </select>
-        </div>
-    </div>
-    @*<div class="form-row">
-        <div class="form-group col-md-6">
-        <label asp-for="Vencimiento" class="control-label"></label>
-        <input asp-for="Vencimiento" class="form-control" id="vencimiento">
-        </div>
-        <div class="form-check">
-        <label asp-for="NoVence" class="control-label"></label>
-        <input asp-for="NoVence" class="form-control" id="novence">
-        </div>
-        </div>*@
-    <div class="form-row">
-        <div class="form-group col-md-3">
-            <label asp-for="PrecioCosto" class="control-label"></label>
-            <input asp-for="PrecioCosto" class="form-control">
-        </div>
-        <div class="form-group col-md-3">
-            <label asp-for="PrecioVenta" class="control-label"></label>
-            <input asp-for="PrecioVenta" class="form-control">
-        </div>
-    </div>
+    <hr>
     <span style="display: inline;">
-        <button type="submit" class="btn btn-success">Guardar</button>
+        <button type="submit" class="btn btn-success-custom">Guardar</button>
         <a asp-controller="Productos" asp-action="Index">
             <button type="button" class="btn btn-warning">Atrás</button>
         </a>
