@@ -12,6 +12,7 @@
             <div class="form-group col-md-6">
                 <label asp-for="Nombre" class="label-control"></label>
                 <input asp-for="Nombre" class="form-control" />
+                @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger"})
             </div>
         </div>
         <div class="form-row">
@@ -23,6 +24,7 @@
             <div class="form-group col-md-3">
                 <label asp-for="Codigo" class="label-control"></label>
                 <input asp-for="Codigo" class="form-control" />
+                @Html.ValidationMessageFor(model => model.Codigo, "", new { @class = "text-danger"})
             </div>
         </div>
         <div class="form-row">
@@ -55,11 +57,11 @@
         <div class="form-row">
             <div class="form-group col-md-3">
                 <label asp-for="PrecioCosto" class="control-label"></label>
-                <input asp-for="PrecioCosto" class="form-control">
+                <input type="number" asp-for="PrecioCosto" step="0.01" class="form-control">
             </div>
             <div class="form-group col-md-3">
                 <label asp-for="PrecioVenta" class="control-label"></label>
-                <input asp-for="PrecioVenta" class="form-control">
+                <input type="number" asp-for="PrecioVenta" step="1" class="form-control">
             </div>
         </div>
     </div>
@@ -71,6 +73,7 @@
         </a>
     </span>
 </form>
+
 @*
     @section Scripts {
     <script type="text/javascript">

@@ -6,6 +6,7 @@ namespace KioskoFacturacion.Web.Models
     public class Rubro
     {
         [Key]
+        [Required]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
         [Required]

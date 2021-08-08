@@ -14,6 +14,9 @@ namespace KioskoFacturacion.Web.Controllers
     [Authorize]
     public class ProductosController : Controller
     {
+        private readonly int _RegistrosPorPagina = 6;
+        private Paginacion<Producto> _PaginadorProductos;
+
         private readonly ApplicationDbContext _context;
 
         public ProductosController(ApplicationDbContext context)
@@ -21,18 +24,39 @@ namespace KioskoFacturacion.Web.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index(string filter)
+        public async Task<IActionResult> Index(string filter, int pagina = 1)
         {
+            int _TotalRegistros = 0;
+            // Número total de registros de la tabla Productos
+            _TotalRegistros = _context.Productos.Count();
             ViewData["CurrentFilter"] = filter;
-            var productos = from e in this._context.Productos.Include("Marca.Rubro")
+            var productos = from e in this._context.Productos
+                            .OrderBy(x => x.Nombre)
+                            .Skip((pagina - 1) * _RegistrosPorPagina)
+                            .Take(_RegistrosPorPagina)
+                            .Include("Marca.Rubro")
                             select e;
+
+            // Número total de páginas de la tabla Productos
+            var _TotalPaginas = (int)Math.Ceiling((double)_TotalRegistros / _RegistrosPorPagina);
+            // Instanciamos la 'Clase de paginación' y asignamos los nuevos valores
 
             if (!String.IsNullOrEmpty(filter))
             {
-                productos = productos.Where(e => e.Nombre.Contains(filter));
-            }
+                productos = productos.Where(e => e.Nombre.Contains(filter) || e.Marca.Nombre.Contains(filter) || e.Marca.Rubro.Nombre.Contains(filter) || e.Codigo.Contains(filter)).OrderBy(x => x.Nombre);
+                _TotalRegistros = productos.Count();
 
-            return View(await productos.ToListAsync());
+            }
+            _PaginadorProductos = new Paginacion<Producto>()
+            {
+                RegistrosPorPagina = _RegistrosPorPagina,
+                TotalRegistros = _TotalRegistros,
+                TotalPaginas = _TotalPaginas,
+                PaginaActual = pagina,
+                Resultado = productos.ToList()
+            };
+
+            return View(_PaginadorProductos);
 
         }
 
@@ -52,7 +76,7 @@ namespace KioskoFacturacion.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Alta([Bind("ID, Codigo, Nombre, MarcaID, Descripcion, PrecioCosto, Estado, PrecioVenta")] Producto producto)
         {
-            if (ModelState.IsValid)
+            if ((ModelState.IsValid) && (producto.PrecioVenta >= producto.PrecioCosto))
             {
                 _context.Add(producto);
                 await _context.SaveChangesAsync();
@@ -119,7 +143,7 @@ namespace KioskoFacturacion.Web.Controllers
             Producto editar = _context.Productos.FirstOrDefault(i => i.ID == id);
             return View(editar);
         }
-        public IActionResult Actualizar(int id, string nombre, string estado, int marcaID, string descripcion, float PrecioCosto, float PrecioVenta, uint codigo)
+        public IActionResult Actualizar(int id, string nombre, string estado, int marcaID, string descripcion, float PrecioCosto, float PrecioVenta, string codigo)
         {
             Producto editar = _context.Productos.FirstOrDefault(i => i.ID == id);
             editar.Nombre = nombre;

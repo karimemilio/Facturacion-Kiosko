@@ -7,31 +7,53 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using System.Data;
-using EFCore.BulkExtensions;
 
 namespace KioskoFacturacion.Web.Controllers
 {
+
     [Authorize]
     public class RubrosController : Controller
     {
+        private readonly int _RegistrosPorPagina = 6;
+        private Paginacion<Rubro> _PaginadorRubros;
+
         private ApplicationDbContext context;
 
         public RubrosController(ApplicationDbContext context)
         {
             this.context = context;
         }
-        public async Task<IActionResult> Index(string filter)
+        public async Task<IActionResult> Index(string filter, int pagina = 1)
         {
+            int _TotalRegistros = 0;
+            // Número total de registros de la tabla Rubros
+            _TotalRegistros = context.Rubros.Count();
             ViewData["CurrentFilter"] = filter;
             var rubros = from e in this.context.Rubros
+                            .OrderBy(x => x.Nombre)
+                            .Skip((pagina - 1) * _RegistrosPorPagina)
+                            .Take(_RegistrosPorPagina)
                          select e;
+
+            // Número total de páginas de la tabla Rubros
+            var _TotalPaginas = (int)Math.Ceiling((double)_TotalRegistros / _RegistrosPorPagina);
+            // Instanciamos la 'Clase de paginación' y asignamos los nuevos valores
 
             if (!String.IsNullOrEmpty(filter))
             {
-                rubros = rubros.Where(e => e.Nombre.Contains(filter));
+                rubros = rubros.Where(e => e.Nombre.Contains(filter)).OrderBy(x => x.Nombre);
+                _TotalRegistros = rubros.Count();
             }
+            _PaginadorRubros = new Paginacion<Rubro>()
+            {
+                RegistrosPorPagina = _RegistrosPorPagina,
+                TotalRegistros = _TotalRegistros,
+                TotalPaginas = _TotalPaginas,
+                PaginaActual = pagina,
+                Resultado = rubros.ToList()
+            };
 
-            return View(await rubros.ToListAsync());
+            return View(_PaginadorRubros);
         }
         public IActionResult Create()
         {

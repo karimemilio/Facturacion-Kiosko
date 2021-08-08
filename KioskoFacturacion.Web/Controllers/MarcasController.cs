@@ -14,6 +14,8 @@ namespace KioskoFacturacion.Web.Controllers
     [Authorize]
     public class MarcasController : Controller
     {
+        private readonly int _RegistrosPorPagina = 6;
+        private Paginacion<Marca> _PaginadorMarcas;
         private ApplicationDbContext context;
 
         public MarcasController(ApplicationDbContext context)
@@ -21,19 +23,38 @@ namespace KioskoFacturacion.Web.Controllers
             this.context = context;
 
         }
-        public async Task<IActionResult> Index(string filter)
+        public async Task<IActionResult> Index(string filter, int pagina = 1)
         {
+            int _TotalRegistros = 0;
+            // Número total de registros de la tabla Marcas
+            _TotalRegistros = context.Marcas.Count();
             ViewData["CurrentFilter"] = filter;
-            var marcas = from e in this.context.Marcas.Include("Rubro")
+            var marcas = from e in this.context.Marcas
+                            .OrderBy(x => x.Nombre)
+                            .Skip((pagina - 1) * _RegistrosPorPagina)
+                            .Take(_RegistrosPorPagina)
+                            .Include("Rubro")
                          select e;
+
+            // Número total de páginas de la tabla Marcas
+            var _TotalPaginas = (int)Math.Ceiling((double)_TotalRegistros / _RegistrosPorPagina);
+            // Instanciamos la 'Clase de paginación' y asignamos los nuevos valores
 
             if (!String.IsNullOrEmpty(filter))
             {
-                marcas = marcas.Where(e => e.Nombre.Contains(filter));
+                marcas = marcas.Where(e => e.Nombre.Contains(filter) || e.Rubro.Nombre.Contains(filter)).OrderBy(x => x.Nombre);
+                _TotalRegistros = marcas.Count();
             }
+            _PaginadorMarcas = new Paginacion<Marca>()
+            {
+                RegistrosPorPagina = _RegistrosPorPagina,
+                TotalRegistros = _TotalRegistros,
+                TotalPaginas = _TotalPaginas,
+                PaginaActual = pagina,
+                Resultado = marcas.ToList()
+            };
 
-            return View(await marcas.ToListAsync());
-
+            return View(_PaginadorMarcas);
         }
 
         public IActionResult Create()

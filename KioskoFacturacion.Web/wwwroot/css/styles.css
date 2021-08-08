@@ -47,7 +47,7 @@
     padding : 7px;
     }
 
-.btn-success-custom {
+.btn-success-custom, li > .btn-success-custom {
     background-color: #9A4EAE !important;
 }
 

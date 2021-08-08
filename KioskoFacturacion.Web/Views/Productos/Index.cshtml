@@ -1,4 +1,4 @@
-@model IEnumerable<Producto>
+@model Paginacion<Producto>
 
 @{
     ViewData["Title"] = "Productos";
@@ -29,24 +29,24 @@
                 <input type="checkbox" onClick="toggle(this)" />
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Codigo)
+                Código
             </th>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Nombre)
+                Nombre
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Marca)
+                Marca
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Marca.Rubro)
+                Rubro
             </th>
             <th>
             </th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.Resultado)
         {
             <tr>
                 <td>
@@ -79,6 +79,62 @@
 @{
     Html.EndForm();
 }
+
+@*CÓDIGO PARA EL PAGINADOR DE REGISTROS*@
+@if (Model.Resultado.Count() > 0)
+{
+    <span>
+        <strong>@Model.TotalRegistros</strong> productos encontrados
+    </span>
+    <span>&nbsp;|&nbsp;</span>
+    <span>
+        Página <strong>@(Model.PaginaActual)</strong> de
+        <strong>@Model.TotalPaginas</strong>
+    </span>
+    <span>&nbsp;|&nbsp;</span>
+}
+else
+{
+    <span>No hay resultados para esta búsqueda</span>
+    <span>&nbsp;|&nbsp;</span>
+}
+
+@if (Model.PaginaActual > 1)
+{
+    @Html.ActionLink("<<", "Index", new { pagina = 1 },
+new { @class = "btn btn-sm btn-default" })
+    <span></span>
+    @Html.ActionLink("Anterior", "Index", new { pagina = Model.PaginaActual - 1 },
+new { @class = "btn btn-sm btn-default" })
+}
+else
+{
+    @Html.ActionLink("<<", "Index", new { pagina = 1 },
+new { @class = "btn btn-sm btn-default disabled" })
+    <span></span>
+    @Html.ActionLink("Anterior", "Index", new { pagina = 1 },
+new { @class = "btn btn-sm btn-default disabled" })
+}
+<span></span>
+@if (Model.PaginaActual < Model.TotalPaginas)
+{
+    @Html.ActionLink("Siguiente", "Index", new { pagina = Model.PaginaActual + 1 },
+new { @class = "btn btn-sm btn-default" })
+    <span></span>
+    @Html.ActionLink(">>", "Index", new { pagina = Model.TotalPaginas },
+new { @class = "btn btn-sm btn-default" })
+}
+else
+{
+    @Html.ActionLink("Siguiente", "Index", new { pagina = Model.TotalPaginas - 1 },
+new { @class = "btn btn-sm btn-default disabled" })
+    <span></span>
+    @Html.ActionLink(">>", "Index", new { pagina = Model.TotalPaginas },
+new { @class = "btn btn-sm btn-default disabled" })
+}
+<br>
+<br>
+
 <div>
     <a asp-action="Alta">
         <button style="display:inline-block" class="btn btn-success-custom">Crear nuevo
@@ -90,6 +146,7 @@
         <button type="button" class="btn btn-warning">Atrás</button>
     </a>
 </div>
+
 <script language="JavaScript">
     function toggle(source) {
         checkboxes = document.getElementsByName('deleteInputs');

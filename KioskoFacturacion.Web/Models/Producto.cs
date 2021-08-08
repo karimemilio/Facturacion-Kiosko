@@ -12,15 +12,16 @@ namespace KioskoFacturacion.Web.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
 
-        [Required]
-        public uint Codigo { get; set; }
+        [Required(ErrorMessage = "Debe ingresar un código válido")]
+        [RegularExpression("^[0-9]*$")]
+        public string Codigo { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Ingrese un nombre")]
         public string Nombre { get; set; }
 
         public Marca Marca { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Debe seleccionar una marca")]
         //[ForeignKey("MarcaID")]
         public int MarcaID { get; set; }
 
