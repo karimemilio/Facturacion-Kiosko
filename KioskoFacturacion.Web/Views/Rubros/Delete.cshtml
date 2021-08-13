@@ -28,11 +28,18 @@
         </dd>
     </dl>
     <hr />
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="ID" />
-        <input type="submit" value="Eliminar" class="btn btn-danger-success" />
-        <a asp-controller="Rubros" asp-action="Index">
-            <button type="button" class="btn btn-warning">Atrás</button>
-        </a>
-    </form>
+    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+        <div class="btn-group mr-1" role="group" aria-label="First group">
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="ID" />
+                <button style="display:inline-block" type="submit" class="custom-btn custom-danger"
+                    onclick="return confirm('¿Está seguro de eliminar el rubro? Ésta acción borrará también las marcas y productos asociados al rubro. Es una acción irreversible.')">Eliminar</button>
+            </form>
+        </div>
+        <div class="btn-group" role="group" aria-label="Third group">
+            <a href='javascript:history.go(-1)'>
+                <button style="display:inline-block" class="custom-btn custom-warning">Atrás</button>
+            </a>
+        </div>
+    </div>
 </div>

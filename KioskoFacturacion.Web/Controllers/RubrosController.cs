@@ -60,16 +60,53 @@ namespace KioskoFacturacion.Web.Controllers
             return View();
         }
 
+        public IActionResult CreateFromMarca()
+        {
+            return View();
+        }
+
         [HttpPost]
         public async Task<IActionResult> Guardar([Bind("Nombre, Estado")] Rubro rubro)
         {
             if (ModelState.IsValid)
             {
-                context.Add(rubro);
-                await context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                //Check if Nombre exists
+                var nom = context.Rubros.FirstOrDefault(x => x.Nombre == rubro.Nombre);
+                if (nom == null)
+                {
+                    context.Add(rubro);
+                    await context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    string msg = "Nombre duplicado";
+                    TempData["ErrorMessage"] = msg;
+                }
             }
             return RedirectToAction(nameof(Create));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GuardarFromMarca([Bind("Nombre, Estado")] Rubro rubro)
+        {
+            if (ModelState.IsValid)
+            {
+                //Check if Nombre exists
+                var nom = context.Rubros.FirstOrDefault(x => x.Nombre == rubro.Nombre);
+                if (nom == null)
+                {
+                    context.Add(rubro);
+                    await context.SaveChangesAsync();
+                    return RedirectToAction("Create", "Marcas", new { area = "" });
+                }
+                else
+                {
+                    string msg = "Nombre duplicado";
+                    TempData["ErrorMessage"] = msg;
+                }
+            }
+            return RedirectToAction(nameof(CreateFromMarca));
         }
 
         public IActionResult Edit(int id)
@@ -77,15 +114,32 @@ namespace KioskoFacturacion.Web.Controllers
             Rubro editar = context.Rubros.FirstOrDefault(i => i.ID == id);
             return View(editar);
         }
-
+        public IActionResult Detail(int id)
+        {
+            Rubro detail = context.Rubros.FirstOrDefault(i => i.ID == id);
+            return View(detail);
+        }
         public IActionResult Actualizar(int id, string nombre, string estado)
         {
-            Rubro editar = context.Rubros.FirstOrDefault(i => i.ID == id);
-            editar.Nombre = nombre;
-            editar.Estado = estado;
-            context.SaveChanges();
+            if (ModelState.IsValid)
+            {
+                Rubro editar = context.Rubros.FirstOrDefault(i => i.ID == id);
+                editar.Nombre = nombre;
+                editar.Estado = estado;
+                var nom = context.Rubros.FirstOrDefault(x => x.Nombre == nombre);
+                if (nom == null)
+                {
+                    context.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    string msg = "Nombre duplicado";
+                    TempData["ErrorMessage"] = msg;
+                }
+            }
+            return RedirectToAction(nameof(Edit));
 
-            return RedirectToAction("Index");
         }
 
         public IActionResult Nombre(string nombre)

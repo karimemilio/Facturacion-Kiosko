@@ -60,22 +60,37 @@ namespace KioskoFacturacion.Web.Controllers
         public IActionResult Create()
         {
             List<Rubro> rubrosList = context.Rubros.ToList();
+            //Rubro unRubro = new();
+            //unRubro.Nombre = "RUBRO NUEVO";
+            //rubrosList.Insert(0, unRubro);
             ViewBag.RubrosList = new SelectList(rubrosList, "ID", "Nombre");
             return View();
         }
 
-
+        [HttpPost]
+        public async Task<IActionResult> CrearRubro([Bind("ID, Nombre, Estado, RubroID")] Marca marca)
+        {
+            return RedirectToAction("CreateFromMarca", "Rubros", new { area = "" });
+        }
         [HttpPost]
         public async Task<IActionResult> Guardar([Bind("ID, Nombre, Estado, RubroID")] Marca marca)
         {
             if (ModelState.IsValid)
             {
-                context.Add(marca);
-                await context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                //Check if Nombre exists
+                var nom = context.Marcas.FirstOrDefault(x => x.Nombre == marca.Nombre);
+                if (nom == null)
+                {
+                    context.Add(marca);
+                    await context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    string msg = "Nombre duplicado";
+                    TempData["ErrorMessage"] = msg;
+                }
             }
-            List<Rubro> rubrosList = context.Rubros.ToList();
-            ViewBag.RubrosList = new SelectList(rubrosList, "ID", "Nombre");
             return RedirectToAction(nameof(Create));
         }
 
@@ -85,6 +100,11 @@ namespace KioskoFacturacion.Web.Controllers
             ViewBag.RubrosList = new SelectList(rubrosList, "ID", "Nombre");
             Marca editar = context.Marcas.FirstOrDefault(i => i.ID == id);
             return View(editar);
+        }
+        public IActionResult Detail(int id)
+        {
+            Marca detail = context.Marcas.Include("Rubro").FirstOrDefault(i => i.ID == id);
+            return View(detail);
         }
 
         public IActionResult Actualizar(int id, string nombre, string estado, int rubroID)

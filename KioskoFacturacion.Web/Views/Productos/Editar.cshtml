@@ -66,12 +66,15 @@
                 </div>
             </div>
         </div>
-        <br>
-        <span style="display: inline;">
-            <button type="submit" class="btn btn-success">Guardar</button>
-            <a asp-controller="Productos" asp-action="Index">
-                <button type="button" class="btn btn-warning">Atrás</button>
-            </a>
-        </span>
+        <hr>
+        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+            <div class="btn-group mr-1" role="group" aria-label="First group">
+                <button type="submit" value="Guardar" class="custom-btn custom-success">Guardar</button>
+            </div>
+            <div class="btn-group mr-1" role="group" aria-label="Second group">
+                <a href='javascript:history.go(-1)'><button style="display:inline-block" type="button"
+                        class="custom-btn custom-warning">Atrás</button></a>
+            </div>
+        </div>
     </form>
 </div>

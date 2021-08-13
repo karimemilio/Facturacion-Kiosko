@@ -109,6 +109,11 @@ namespace KioskoFacturacion.Web.Controllers
             return View("Index", productosList);
         }
 
+        public IActionResult Detail(int id)
+        {
+            Producto detail = _context.Productos.Include("Marca.Rubro").FirstOrDefault(i => i.ID == id);
+            return View(detail);
+        }
         public async Task<IActionResult> Eliminar(int? id)
         {
             if (id == null)
@@ -116,7 +121,7 @@ namespace KioskoFacturacion.Web.Controllers
                 return NotFound();
             }
 
-            var producto = await _context.Productos.Include("Marca")
+            var producto = await _context.Productos.Include("Marca.Rubro")
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (producto == null)
             {

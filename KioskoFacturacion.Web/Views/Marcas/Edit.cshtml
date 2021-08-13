@@ -17,15 +17,17 @@
                 <input type="text" asp-for="Nombre" class="form-control">
             </div>
         </div>
+        <br>
         <div class="form-group row">
             <div class="col-sm-1 col-form-label">
                 @Html.DisplayNameFor(model => model.Rubro)
             </div>
             <div class="col-sm-6">
-                @Html.DropDownList("RubroID", ViewBag.RubrosList, "", new { @class = "form-control"})
+                @Html.DropDownList("RubroID", ViewBag.RubrosList, "Elegir el rubro", new { @class = "form-control"})
                 @Html.ValidationMessageFor(model => model.RubroID, "", new { @class = "text-danger"})
             </div>
         </div>
+        <br>
         <div class="form-group row">
             <div class="col-sm-1 col-form-label">
                 @Html.DisplayNameFor(model => model.Estado)
@@ -39,9 +41,14 @@
 
         </div>
         <hr />
-        <button type="submit" value="Guardar" class="btn btn-success-custom">Guardar</button>
-        <a asp-controller="Marcas" asp-action="Index">
-            <button type="button" class="btn btn-warning">Atrás</button>
-        </a>
+        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+            <div class="btn-group mr-1" role="group" aria-label="First group">
+                <button type="submit" value="Guardar" class="custom-btn custom-success">Guardar</button>
+            </div>
+            <div class="btn-group mr-1" role="group" aria-label="Second group">
+                <a href='javascript:history.go(-1)'><button style="display:inline-block" type="button"
+                        class="custom-btn custom-warning">Atrás</button></a>
+            </div>
+        </div>
     </form>
 </div>

@@ -1,80 +1,133 @@
-@import url('https://fonts.googleapis.com/css2?family=Style+Script&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=WindSong:wght@500&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Style+Script&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=WindSong:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap");
 .navbar-customclass {
-    background-color: #fddfbe;
+  background-color: #fddfbe;
 }
 /* changing brand text color*/
 .navbar-customclass .navbar-brand,
 .navbar-customclass .navbar-text {
-    color: #ffffff;
+  color: #ffffff;
 }
 /* navigation link text color */
 .navbar-customclass .navbar-nav .nav-link {
-    color: rgba(255,255,255,.6);
+  color: rgba(255, 255, 255, 0.6);
 }
 /* navigation links anchor hover and active styles */
 .navbar-customclass .nav-item.active .nav-link,
 .navbar-customclass .nav-item:hover .nav-link {
-    color: #ffffff;
+  color: #ffffff;
 }
 
 .card-text {
-    color: #000000;
+  color: #000000;
 }
 
 .navbar-custom {
-    background-color: #9A4EAE;
-    -webkit-box-shadow: 0 8px 6px -6px #999;
-    -moz-box-shadow: 0 8px 6px -6px #999;
-    box-shadow: 0 8px 6px -6px #999;
-   }
+  background-color: #9a4eae;
+  -webkit-box-shadow: 0 8px 6px -6px #999;
+  -moz-box-shadow: 0 8px 6px -6px #999;
+  box-shadow: 0 8px 6px -6px #999;
+}
 
 .txt-custom {
-    color: rgb(216, 212, 207);
-    font-family: 'WindSong', cursive;
-    font-size: 40 px;
+  color: rgb(216, 212, 207);
+  font-family: "WindSong", cursive;
+  font-size: 40 px;
 }
 .txt-custom-log {
-    color: rgb(255, 255, 255) !important;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: bold;
-    font-size: 40 px;
+  color: rgb(255, 255, 255) !important;
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+  font-size: 40 px;
 }
 
 .form-custom {
-    border-left : 2px solid #9A4EAE;
-    padding : 7px;
-    }
-
-.btn-success-custom, li > .btn-success-custom {
-    background-color: #9A4EAE !important;
+  border-left: 2px solid #9a4eae;
+  padding: 7px;
 }
 
+.btn-success-custom,
+li > .btn-success-custom {
+  background-color: #9a4eae !important;
+}
 
 .btn-danger-success {
-    background-color: #EBDCEF
-    !important;
+  background-color: #ebdcef !important;
 }
-
 
 .card-custom {
-    width: 18rem !important;
-    border-radius: 14px !important;
-    border-color: #9A4EAE !important;
+  width: 18rem !important;
+  border-radius: 14px !important;
+  border-color: #9a4eae !important;
 }
 
 .card-body > a {
-    text-decoration: none !important;
-
+  text-decoration: none !important;
 }
 
-.card-body > h5, .card-body > a > h5 {
-    color: #9A4EAE !important;
-
+.card-body > h5,
+.card-body > a > h5 {
+  color: #9a4eae !important;
 }
 
 .card-body > a {
-    color: #9A4EAE !important;
+  color: #9a4eae !important;
+}
 
+/* Custom btn */
+.custom-btn {
+  border: 1px solid black;
+  background-color: white;
+  color: black;
+  padding: 7px 14px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 10px;
+  margin-right: 5px;
+}
+
+/* Custom btn-sm */
+.custom-btn-sm {
+  border: 1px solid black;
+  background-color: white;
+  color: black;
+  padding: 4px 8px;
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 10px;
+  margin-right: 5px;
+}
+
+/* Custom danger */
+.custom-danger {
+  border-color: #e30b5c;
+  color: #e30b5c;
+}
+
+.custom-danger:hover {
+  background: #e30b5c;
+  color: white;
+}
+
+/* Custom success */
+.custom-success {
+  border-color: #9a4eae;
+  color: #9a4eae;
+}
+
+.custom-success:hover {
+  background: #9a4eae;
+  color: white;
+}
+
+/* Custom warning */
+.custom-warning {
+  border-color: #ff4f00;
+  color: #ff4f00;
+}
+
+.custom-warning:hover {
+  background: #ff4f00;
+  color: white;
 }

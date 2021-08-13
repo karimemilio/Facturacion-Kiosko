@@ -51,13 +51,17 @@
 @{
     Html.EndForm();
 }
-<div>
-    <a href="javascript:(function(){document.tableForm.submit();return void(0);})()">
-        <button style="display:inline-block" class="btn btn-danger-success">Borrar selección</button>
-    </a>
-    <a asp-controller="Productos" asp-action="Index">
-        <button type="button" class="btn btn-warning">Atrás</button>
-    </a>
+<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+    <div class="btn-group mr-1" role="group" aria-label="First group">
+        <a href="javascript:(function(){document.tableForm.submit();return void(0);})()">
+            <button style="display:inline-block" class="custom-btn custom-danger"
+                onclick="return confirm('¿Está seguro de eliminar este lote de productos?\r\nEs una acción irreversible.')">Borrar
+                selección</button>
+        </a>
+    </div>
+    <div class="btn-group" role="group" aria-label="Second group">
+        <a href='javascript:history.go(-1)'><button type="button" class="custom-btn custom-warning">Atrás</button></a>
+    </div>
 </div>
 
 <script language="JavaScript">

@@ -1,0 +1,71 @@
+@model KioskoFacturacion.Web.Models.Producto
+
+@{
+    ViewData["Title"] = "Detalles del producto";
+}
+
+<div class="container text-center">
+    <h1>@ViewData["Title"]</h1>
+</div>
+<br>
+
+<h3>@Html.DisplayFor(model => model.Nombre)</h3>
+<div>
+    <hr />
+    <dl class="row form-custom">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Marca)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Marca.Nombre)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Marca.Rubro)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Marca.Rubro.Nombre)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Codigo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Codigo)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Estado)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Estado)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PrecioCosto)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PrecioCosto)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PrecioVenta)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PrecioVenta)
+        </dd>
+    </dl>
+    <hr />
+    <div class="btn-group">
+        <a href='javascript:history.go(-1)'>
+            <button style="display:inline-block" class="custom-btn custom-warning">Atrás</button>
+        </a>
+    </div>
+</div>

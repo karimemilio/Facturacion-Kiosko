@@ -1,0 +1,41 @@
+@model KioskoFacturacion.Web.Models.Marca
+
+@{
+    ViewData["Title"] = "Detalles de la marca";
+}
+
+<div class="container text-center">
+    <h1>@ViewData["Title"]</h1>
+</div>
+<br>
+
+<h3>@Html.DisplayFor(model => model.Nombre)</h3>
+<div>
+    <hr />
+    <dl class="row form-custom">
+        <dt class="col-sm-1">
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+        <dd class="col-sm-11">
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+        <dt class="col-sm-1">
+            @Html.DisplayNameFor(model => model.Rubro)
+        </dt>
+        <dd class="col-sm-11">
+            @Html.DisplayFor(model => model.Rubro.Nombre)
+        </dd>
+        <dt class="col-sm-1">
+            @Html.DisplayNameFor(model => model.Estado)
+        </dt>
+        <dd class="col-sm-11">
+            @Html.DisplayFor(model => model.Estado)
+        </dd>
+    </dl>
+    <hr />
+    <div class="btn-group">
+        <a href='javascript:history.go(-1)'>
+            <button style="display:inline-block" class="custom-btn custom-warning">Atrás</button>
+        </a>
+    </div>
+</div>

@@ -65,12 +65,19 @@
                     @item.Marca.Rubro.Nombre
                 </td>
                 <td>
-                    <a asp-action="Editar" asp-route-ID="@item.ID">
-                        <button type="button" class="btn btn-warning btn-sm">Editar</button>
-                    </a>
-                    <a asp-action="Eliminar" asp-route-ID="@item.ID">
-                        <button type="button" class="btn btn-danger-success btn-sm">Eliminar</button>
-                    </a>
+                    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                        <div class="btn-group mr-1" role="group" aria-label="First group">
+                            <a asp-action="Detail" asp-route-ID="@item.ID">
+                                <button type="button" class="custom-btn-sm custom-success">Detalle</button>
+                            </a>
+                            <a asp-action="Editar" asp-route-ID="@item.ID">
+                                <button type="button" class="custom-btn-sm custom-warning">Editar</button>
+                            </a>
+                            <a asp-action="Eliminar" asp-route-ID="@item.ID">
+                                <button type="button" class="custom-btn-sm custom-danger">Eliminar</button>
+                            </a>
+                        </div>
+                    </div>
                 </td>
             </tr>
         }
@@ -84,13 +91,13 @@
 @if (Model.Resultado.Count() > 0)
 {
     <span>
-        <strong>@Model.TotalRegistros</strong> productos encontrados
-    </span>
+    <strong>@Model.TotalRegistros</strong> productos encontrados
+</span>
     <span>&nbsp;|&nbsp;</span>
     <span>
-        Página <strong>@(Model.PaginaActual)</strong> de
-        <strong>@Model.TotalPaginas</strong>
-    </span>
+    Página <strong>@(Model.PaginaActual)</strong> de
+    <strong>@Model.TotalPaginas</strong>
+</span>
     <span>&nbsp;|&nbsp;</span>
 }
 else
@@ -135,17 +142,24 @@ new { @class = "btn btn-sm btn-default disabled" })
 <br>
 <br>
 
-<div>
-    <a asp-action="Alta">
-        <button style="display:inline-block" class="btn btn-success-custom">Crear nuevo
-        </button></a>
-    <a href="javascript:(function(){document.tableForm.submit();return void(0);})()">
-        <button style="display:inline-block" class="btn btn-danger-success">Borrar selección</button>
-    </a>
-    <a asp-controller="Home" asp-action="Gestion">
-        <button type="button" class="btn btn-warning">Atrás</button>
-    </a>
+<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+    <div class="btn-group mr-1" role="group" aria-label="First group">
+        <a asp-action="Alta">
+            <button style="display:inline-block" class="custom-btn custom-success">Crear nuevo
+            </button></a>
+    </div>
+    <div class="btn-group mr-1" role="group" aria-label="Second group">
+        <a href="javascript:(function(){document.tableForm.submit();return void(0);})()">
+            <button style="display:inline-block" class="custom-btn custom-danger">Borrar selección</button>
+        </a>
+    </div>
+    <div class="btn-group" role="group" aria-label="Third group">
+        <a href='javascript:history.go(-1)'>
+            <button style="display:inline-block" class="custom-btn custom-warning">Atrás</button>
+        </a>
+    </div>
 </div>
+
 
 <script language="JavaScript">
     function toggle(source) {
