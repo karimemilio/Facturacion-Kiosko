@@ -1,12 +1,54 @@
-﻿@{
-    ViewData["Title"] = "Menú de Gestión";
+﻿@model KioskoFacturacion.Web.Models.Producto
+
+@{
+    ViewData["Title"] = "Menú de Facturación";
 }
 <div class="container text-center">
     <h1 class="display-4">
         <h1>@ViewData["Title"]</h1>
     </h1>
-    <p>Próximamente habrá disponible un menú para facturar productos <a
-            href="mailto:karimemilio98@gmail.com?Subject=Menú Facturacion%20de%20la%20aplicacion">Contactar por
-            correo</a></p>
-    <img src="https://www.sourcecodester.com/sites/default/files/images/Gauravtripathi/bill.png" alt="">
+</div>
+<div class="row justify-content">
+    <div class="col-1">
+        <a asp-controller="Productos" asp-action="Index">
+            <p>Productos</p>
+        </a>
+        <a asp-controller="Marcas" asp-action="Index">
+            <p>Marcas</p>
+        </a>
+        <a asp-controller="Rubros" asp-action="Index">
+            <p>Rubros</p>
+        </a>
+        <a asp-controller="Ventas" asp-action="Index">
+            <p>Ventas</p>
+        </a>
+    </div>
+    <div class="col-9">
+        <form>
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label asp-for="Codigo" class="label-control"></label>
+                    <input asp-for="Codigo" class="form-control" />
+                    @Html.ValidationMessageFor(model => model.Codigo, "", new { @class = "text-danger"})
+                </div>
+                <div class="form-group col-md-3">
+                    @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label"})
+                    @Html.DropDownList("ProductoID", ViewBag.productosList, "Elegir el producto", new { @class =
+                    "form-control" })
+                    @Html.ValidationMessageFor(model => model.ID, "", new { @class = "text-danger"})
+                </div>
+            </div>
+            <hr>
+            <span style="display: inline;">
+                <button type="submit" class="custom-btn custom-success">Guardar</button>
+                <a href='javascript:history.go(-1)'><button type="button"
+                        class="custom-btn custom-warning">Atrás</button></a>
+            </span>
+        </form>
+    </div>
+    <div class="col-2">
+        1 x Tita
+        2 x Rhodesia
+        1 x Lavandina
+    </div>
 </div>

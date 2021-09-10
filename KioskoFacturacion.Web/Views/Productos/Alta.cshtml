@@ -11,13 +11,15 @@
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label asp-for="Nombre" class="label-control"></label>
-                <input asp-for="Nombre" class="form-control" />
+                <input asp-for="Nombre" class="form-control" autofocus />
                 @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger"})
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-3">
-                @Html.LabelFor(model => model.Marca, htmlAttributes: new { @class = "control-label"})
+                @Html.Label("Marca") <button type="submit" class="btn btn-sm" formaction="CrearMarca"
+                    value="MarcaNueva">
+                    <img src="~/assets/add.png" alt="Crear Marca" width="10" height="10"></button>
                 @Html.DropDownList("MarcaID", ViewBag.marcasList, "Elegir la marca", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.MarcaID, "", new { @class = "text-danger"})
             </div>

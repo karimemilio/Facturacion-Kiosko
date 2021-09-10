@@ -41,7 +41,7 @@ namespace KioskoFacturacion.Web.Controllers
 
             if (!String.IsNullOrEmpty(filter))
             {
-                rubros = rubros.Where(e => e.Nombre.Contains(filter)).OrderBy(x => x.Nombre);
+                rubros = rubros.Where(e => e.Nombre.ToLower().Contains(filter.ToLower())).OrderBy(x => x.Nombre);
                 _TotalRegistros = rubros.Count();
             }
             _PaginadorRubros = new Paginacion<Rubro>()
@@ -61,6 +61,10 @@ namespace KioskoFacturacion.Web.Controllers
         }
 
         public IActionResult CreateFromMarca()
+        {
+            return View();
+        }
+        public IActionResult CreateFromProducto()
         {
             return View();
         }
@@ -108,7 +112,27 @@ namespace KioskoFacturacion.Web.Controllers
             }
             return RedirectToAction(nameof(CreateFromMarca));
         }
-
+        [HttpPost]
+        public async Task<IActionResult> GuardarFromProducto([Bind("Nombre, Estado")] Rubro rubro)
+        {
+            if (ModelState.IsValid)
+            {
+                //Check if Nombre exists
+                var nom = context.Rubros.FirstOrDefault(x => x.Nombre == rubro.Nombre);
+                if (nom == null)
+                {
+                    context.Add(rubro);
+                    await context.SaveChangesAsync();
+                    return RedirectToAction("CreateFromProducto", "Marcas", new { area = "" });
+                }
+                else
+                {
+                    string msg = "Nombre duplicado";
+                    TempData["ErrorMessage"] = msg;
+                }
+            }
+            return RedirectToAction(nameof(CreateFromMarca));
+        }
         public IActionResult Edit(int id)
         {
             Rubro editar = context.Rubros.FirstOrDefault(i => i.ID == id);

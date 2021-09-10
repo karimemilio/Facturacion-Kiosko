@@ -42,7 +42,7 @@ namespace KioskoFacturacion.Web.Controllers
 
             if (!String.IsNullOrEmpty(filter))
             {
-                marcas = marcas.Where(e => e.Nombre.Contains(filter) || e.Rubro.Nombre.Contains(filter)).OrderBy(x => x.Nombre);
+                marcas = marcas.Where(e => e.Nombre.ToLower().Contains(filter.ToLower()) || e.Rubro.Nombre.ToLower().Contains(filter.ToLower())).OrderBy(x => x.Nombre);
                 _TotalRegistros = marcas.Count();
             }
             _PaginadorMarcas = new Paginacion<Marca>()
@@ -72,6 +72,42 @@ namespace KioskoFacturacion.Web.Controllers
         {
             return RedirectToAction("CreateFromMarca", "Rubros", new { area = "" });
         }
+
+        [HttpPost]
+        public async Task<IActionResult> CrearRubroFromProducto([Bind("ID, Nombre, Estado, RubroID")] Marca marca)
+        {
+            return RedirectToAction("CreateFromProducto", "Rubros", new { area = "" });
+        }
+        public IActionResult CreateFromProducto()
+        {
+            List<Rubro> rubrosList = context.Rubros.ToList();
+            ViewBag.RubrosList = new SelectList(rubrosList, "ID", "Nombre");
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GuardarFromProducto([Bind("Nombre, Estado, RubroID")] Marca marca)
+        {
+            if (ModelState.IsValid)
+            {
+                //Check if Nombre exists
+                var nom = context.Marcas.FirstOrDefault(x => x.Nombre == marca.Nombre);
+                if (nom == null)
+                {
+                    context.Add(marca);
+                    await context.SaveChangesAsync();
+                    return RedirectToAction("Alta", "Productos", new { area = "" });
+                }
+                else
+                {
+                    string msg = "Nombre duplicado";
+                    TempData["ErrorMessage"] = msg;
+                }
+            }
+            return RedirectToAction(nameof(CreateFromProducto));
+        }
+
+
         [HttpPost]
         public async Task<IActionResult> Guardar([Bind("ID, Nombre, Estado, RubroID")] Marca marca)
         {

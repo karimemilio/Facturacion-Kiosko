@@ -18,7 +18,7 @@
                     @Html.DisplayNameFor(model => model.Nombre)
                 </div>
                 <div class="col-sm-6">
-                    <input type="text" asp-for="Nombre" class="form-control">
+                    <input type="text" asp-for="Nombre" class="form-control" onfocus="this.select();" autofocus>
                 </div>
                 <p class="text-danger">
                     @ViewBag.Message

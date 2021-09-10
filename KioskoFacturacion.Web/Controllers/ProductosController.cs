@@ -93,6 +93,12 @@ namespace KioskoFacturacion.Web.Controllers
             return View("Alta", producto);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> CrearMarca([Bind("ID, Nombre, Codigo, Descripcion, Estado, PrecioCosto, PrecioVenta MarcaID")] Producto producto)
+        {
+            return RedirectToAction("CreateFromProducto", "Marcas", new { area = "" });
+        }
+
         public async Task<IActionResult> Buscar(string filtroNombre)
         {
             ViewData["filtroNombre"] = filtroNombre;
