@@ -23,40 +23,60 @@ namespace KioskoFacturacion.Web.Controllers
             this.context = context;
 
         }
-        public async Task<IActionResult> Index(string filter, int pagina = 1)
+        public async Task<IActionResult> Index(string filter, string sortOrder, string currentFilter, int? pageNumber)
         {
-            int _TotalRegistros = 0;
-            // Número total de registros de la tabla Marcas
-            _TotalRegistros = context.Marcas.Count();
+
+            ViewData["CurrentSort"] = sortOrder;
+
+            if (filter != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                filter = currentFilter;
+            }
+
+            //Filtro de busqueda
             ViewData["CurrentFilter"] = filter;
+
+            //Filtros de ordenamiento
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["RubroSortParm"] = sortOrder == "Rubro" ? "rubro_desc" : "Rubro";
+            ViewData["StateSortParm"] = sortOrder == "State" ? "state_desc" : "State";
+
+            //Obtencion de todos las marcas
             var marcas = from e in this.context.Marcas
-                            .OrderBy(x => x.Nombre)
-                            .Skip((pagina - 1) * _RegistrosPorPagina)
-                            .Take(_RegistrosPorPagina)
-                            .Include("Rubro")
+                         .Include("Rubro")
                          select e;
 
-            // Número total de páginas de la tabla Marcas
-            var _TotalPaginas = (int)Math.Ceiling((double)_TotalRegistros / _RegistrosPorPagina);
-            // Instanciamos la 'Clase de paginación' y asignamos los nuevos valores
-
-            if (!String.IsNullOrEmpty(filter))
+            //Ordenación
+            switch (sortOrder)
             {
-                marcas = marcas.Where(e => e.Nombre.ToLower().Contains(filter.ToLower()) || e.Rubro.Nombre.ToLower().Contains(filter.ToLower())).OrderBy(x => x.Nombre);
-                _TotalRegistros = marcas.Count();
+                case "name_desc":
+                    marcas = marcas.OrderByDescending(r => r.Nombre);
+                    break;
+                case "Rubro":
+                    marcas = marcas.OrderBy(s => s.Rubro);
+                    break;
+                case "rubro_desc":
+                    marcas = marcas.OrderByDescending(s => s.Rubro);
+                    break;
+                case "State":
+                    marcas = marcas.OrderBy(s => s.Estado);
+                    break;
+                case "state_desc":
+                    marcas = marcas.OrderByDescending(s => s.Estado);
+                    break;
+                default:
+                    marcas = marcas.OrderBy(r => r.Nombre);
+                    break;
             }
-            _PaginadorMarcas = new Paginacion<Marca>()
-            {
-                RegistrosPorPagina = _RegistrosPorPagina,
-                TotalRegistros = _TotalRegistros,
-                TotalPaginas = _TotalPaginas,
-                PaginaActual = pagina,
-                Resultado = marcas.ToList()
-            };
 
-            return View(_PaginadorMarcas);
+            int pageSize = 6;
+
+            return View(await PaginatedList<Marca>.CreateAsync(marcas.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
-
         public IActionResult Create()
         {
             List<Rubro> rubrosList = context.Rubros.ToList();
@@ -145,13 +165,25 @@ namespace KioskoFacturacion.Web.Controllers
 
         public IActionResult Actualizar(int id, string nombre, string estado, int rubroID)
         {
-            Marca editar = context.Marcas.FirstOrDefault(i => i.ID == id);
-            editar.Nombre = nombre;
-            editar.Estado = estado;
-            editar.RubroID = rubroID;
-            context.SaveChanges();
-
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                Marca editar = context.Marcas.FirstOrDefault(i => i.ID == id);
+                var nom = context.Marcas.FirstOrDefault(x => x.Nombre == nombre);
+                if ((nom == null) || (nombre == editar.Nombre) || (nom.RubroID != rubroID))
+                {
+                    editar.Nombre = nombre;
+                    editar.Estado = estado;
+                    editar.RubroID = rubroID;
+                    context.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    string msg = "Nombre duplicado";
+                    TempData["ErrorMessage"] = msg;
+                }
+            }
+            return RedirectToAction(nameof(Edit));
         }
 
         public async Task<IActionResult> Delete(int? id)

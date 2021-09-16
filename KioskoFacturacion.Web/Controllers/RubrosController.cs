@@ -14,11 +14,7 @@ namespace KioskoFacturacion.Web.Controllers
     [Authorize]
     public class RubrosController : Controller
     {
-        private readonly int _RegistrosPorPagina = 6;
-        private Paginacion<Rubro> _PaginadorRubros;
-
         private ApplicationDbContext context;
-
         public RubrosController(ApplicationDbContext context)
         {
             this.context = context;
