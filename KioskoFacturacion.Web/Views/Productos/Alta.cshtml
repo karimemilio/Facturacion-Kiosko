@@ -14,6 +14,10 @@
                 <input asp-for="Nombre" class="form-control" autofocus />
                 @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger"})
             </div>
+            <p class="text-danger">
+                @ViewBag.Message
+                @TempData["ErrorMessage"]
+            </p>
         </div>
         <div class="form-row">
             <div class="form-group col-md-3">

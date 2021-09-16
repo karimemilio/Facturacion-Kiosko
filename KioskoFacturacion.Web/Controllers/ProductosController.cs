@@ -14,9 +14,6 @@ namespace KioskoFacturacion.Web.Controllers
     [Authorize]
     public class ProductosController : Controller
     {
-        private readonly int _RegistrosPorPagina = 6;
-        private Paginacion<Producto> _PaginadorProductos;
-
         private readonly ApplicationDbContext _context;
 
         public ProductosController(ApplicationDbContext context)
@@ -24,40 +21,73 @@ namespace KioskoFacturacion.Web.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index(string filter, int pagina = 1)
+        public async Task<IActionResult> Index(string filter, string sortOrder, string currentFilter, int? pageNumber)
         {
-            int _TotalRegistros = 0;
-            // Número total de registros de la tabla Productos
-            _TotalRegistros = _context.Productos.Count();
+
+            ViewData["CurrentSort"] = sortOrder;
+
+            if (filter != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                filter = currentFilter;
+            }
+
+            //Filtro de busqueda
             ViewData["CurrentFilter"] = filter;
+
+            //Filtros de ordenamiento
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["CodeSortParm"] = sortOrder == "Code" ? "code_desc" : "Code";
+            ViewData["MarcaSortParm"] = sortOrder == "Marca" ? "marca_desc" : "Marca";
+            ViewData["RubroSortParm"] = sortOrder == "Rubro" ? "rubro_desc" : "Rubro";
+            ViewData["StateSortParm"] = sortOrder == "State" ? "state_desc" : "State";
+
+            //Obtencion de todos las marcas
             var productos = from e in this._context.Productos
-                            .OrderBy(x => x.Nombre)
-                            .Skip((pagina - 1) * _RegistrosPorPagina)
-                            .Take(_RegistrosPorPagina)
-                            .Include("Marca.Rubro")
+                         .Include("Marca.Rubro")
                             select e;
 
-            // Número total de páginas de la tabla Productos
-            var _TotalPaginas = (int)Math.Ceiling((double)_TotalRegistros / _RegistrosPorPagina);
-            // Instanciamos la 'Clase de paginación' y asignamos los nuevos valores
-
-            if (!String.IsNullOrEmpty(filter))
+            //Ordenación
+            switch (sortOrder)
             {
-                productos = productos.Where(e => e.Nombre.Contains(filter) || e.Marca.Nombre.Contains(filter) || e.Marca.Rubro.Nombre.Contains(filter) || e.Codigo.Contains(filter)).OrderBy(x => x.Nombre);
-                _TotalRegistros = productos.Count();
-
+                case "name_desc":
+                    productos = productos.OrderByDescending(r => r.Nombre);
+                    break;
+                case "Code":
+                    productos = productos.OrderBy(s => s.Codigo);
+                    break;
+                case "code_desc":
+                    productos = productos.OrderByDescending(s => s.Codigo);
+                    break;
+                case "Marca":
+                    productos = productos.OrderBy(s => s.Marca.Nombre);
+                    break;
+                case "marca_desc":
+                    productos = productos.OrderByDescending(s => s.Marca.Nombre);
+                    break;
+                case "Rubro":
+                    productos = productos.OrderBy(s => s.Marca.Rubro);
+                    break;
+                case "rubro_desc":
+                    productos = productos.OrderByDescending(s => s.Marca.Rubro);
+                    break;
+                case "State":
+                    productos = productos.OrderBy(s => s.Estado);
+                    break;
+                case "state_desc":
+                    productos = productos.OrderByDescending(s => s.Estado);
+                    break;
+                default:
+                    productos = productos.OrderBy(r => r.Nombre);
+                    break;
             }
-            _PaginadorProductos = new Paginacion<Producto>()
-            {
-                RegistrosPorPagina = _RegistrosPorPagina,
-                TotalRegistros = _TotalRegistros,
-                TotalPaginas = _TotalPaginas,
-                PaginaActual = pagina,
-                Resultado = productos.ToList()
-            };
 
-            return View(_PaginadorProductos);
+            int pageSize = 6;
 
+            return View(await PaginatedList<Producto>.CreateAsync(productos.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         public IActionResult Alta()
@@ -72,6 +102,7 @@ namespace KioskoFacturacion.Web.Controllers
             ViewBag.marcasList = new SelectList(marcasList, "Value", "Text");
             return View();
         }
+
 
         [HttpPost]
         public async Task<IActionResult> Alta([Bind("ID, Codigo, Nombre, MarcaID, Descripcion, PrecioCosto, Estado, PrecioVenta")] Producto producto)

@@ -14,8 +14,6 @@ namespace KioskoFacturacion.Web.Controllers
     [Authorize]
     public class MarcasController : Controller
     {
-        private readonly int _RegistrosPorPagina = 6;
-        private Paginacion<Marca> _PaginadorMarcas;
         private ApplicationDbContext context;
 
         public MarcasController(ApplicationDbContext context)
