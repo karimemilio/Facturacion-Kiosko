@@ -23,37 +23,51 @@ namespace KioskoFacturacion.Web.Controllers
         {
             this.context = context;
         }
-        public async Task<IActionResult> Index(string filter, int pagina = 1)
+        public async Task<IActionResult> Index(string filter, string sortOrder, string currentFilter, int? pageNumber)
         {
-            int _TotalRegistros = 0;
-            // Número total de registros de la tabla Rubros
-            _TotalRegistros = context.Rubros.Count();
+
+            ViewData["CurrentSort"] = sortOrder;
+
+            if (filter != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                filter = currentFilter;
+            }
+
+            //Filtro de busqueda
             ViewData["CurrentFilter"] = filter;
+
+            //Filtros de ordenamiento
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["StateSortParm"] = sortOrder == "State" ? "state_desc" : "State";
+
+            //Obtencion de todos los rubros
             var rubros = from e in this.context.Rubros
-                            .OrderBy(x => x.Nombre)
-                            .Skip((pagina - 1) * _RegistrosPorPagina)
-                            .Take(_RegistrosPorPagina)
                          select e;
 
-            // Número total de páginas de la tabla Rubros
-            var _TotalPaginas = (int)Math.Ceiling((double)_TotalRegistros / _RegistrosPorPagina);
-            // Instanciamos la 'Clase de paginación' y asignamos los nuevos valores
-
-            if (!String.IsNullOrEmpty(filter))
+            //Ordenación
+            switch (sortOrder)
             {
-                rubros = rubros.Where(e => e.Nombre.ToLower().Contains(filter.ToLower())).OrderBy(x => x.Nombre);
-                _TotalRegistros = rubros.Count();
+                case "name_desc":
+                    rubros = rubros.OrderByDescending(r => r.Nombre);
+                    break;
+                case "State":
+                    rubros = rubros.OrderBy(s => s.Estado);
+                    break;
+                case "state_desc":
+                    rubros = rubros.OrderByDescending(s => s.Estado);
+                    break;
+                default:
+                    rubros = rubros.OrderBy(r => r.Nombre);
+                    break;
             }
-            _PaginadorRubros = new Paginacion<Rubro>()
-            {
-                RegistrosPorPagina = _RegistrosPorPagina,
-                TotalRegistros = _TotalRegistros,
-                TotalPaginas = _TotalPaginas,
-                PaginaActual = pagina,
-                Resultado = rubros.ToList()
-            };
 
-            return View(_PaginadorRubros);
+            int pageSize = 6;
+
+            return View(await PaginatedList<Rubro>.CreateAsync(rubros.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
         public IActionResult Create()
         {
@@ -148,11 +162,11 @@ namespace KioskoFacturacion.Web.Controllers
             if (ModelState.IsValid)
             {
                 Rubro editar = context.Rubros.FirstOrDefault(i => i.ID == id);
-                editar.Nombre = nombre;
-                editar.Estado = estado;
                 var nom = context.Rubros.FirstOrDefault(x => x.Nombre == nombre);
-                if (nom == null)
+                if ((nom == null) || (nombre == editar.Nombre))
                 {
+                    editar.Nombre = nombre;
+                    editar.Estado = estado;
                     context.SaveChanges();
                     return RedirectToAction("Index");
                 }

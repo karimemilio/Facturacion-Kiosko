@@ -1,4 +1,4 @@
-@model Paginacion<Rubro>
+@model PaginatedList<KioskoFacturacion.Web.Models.Rubro>
 @{
         ViewData["Title"] = "Rubros";
 }
@@ -28,17 +28,21 @@
                                 <input type="checkbox" onClick="toggle(this)" />
                         </th>
                         <th>
-                                Nombre
+                                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]"
+                                        asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                                        class="custom-table">Nombre</a>
                         </th>
                         <th>
-                                Estado
+                                <a asp-action="Index" asp-route-sortOrder="@ViewData["StateSortParm"]"
+                                        asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                                        class="custom-table">Estado</a>
                         </th>
                         <th>
                         </th>
                 </tr>
         </thead>
         <tbody>
-                @foreach (var item in Model.Resultado)
+                @foreach (var item in Model)
                 {
                         <tr>
                                 <td>
@@ -75,83 +79,50 @@
 @{
         Html.EndForm();
 }
-@*CÓDIGO PARA EL PAGINADOR DE REGISTROS*@
-@if (Model.Resultado.Count() > 0)
-{
-        <span>
-        <strong>@Model.TotalRegistros</strong> rubros encontrados
-</span>
-        <span>&nbsp;|&nbsp;</span>
-        <span>
-        Página <strong>@(Model.PaginaActual)</strong> de
-        <strong>@Model.TotalPaginas</strong>
-</span>
-        <span>&nbsp;|&nbsp;</span>
-}
-else
-{
-        <span>No hay resultados para esta búsqueda</span>
-        <span>&nbsp;|&nbsp;</span>
+@*Paginacion*@
+@{
+        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
 }
 
-@if (Model.PaginaActual > 1)
-{
-        @Html.ActionLink("<<", "Index", new { pagina = 1 },
-new { @class = "btn btn-sm btn-default" })
-        <span></span>
-        @Html.ActionLink("Anterior", "Index", new { pagina = Model.PaginaActual - 1 },
-new { @class = "btn btn-sm btn-default" })
-}
-else
-{
-        @Html.ActionLink("<<", "Index", new { pagina = 1 },
-new { @class = "btn btn-sm btn-default disabled" })
-        <span></span>
-        @Html.ActionLink("Anterior", "Index", new { pagina = 1 },
-new { @class = "btn btn-sm btn-default disabled" })
-}
-<span></span>
-@if (Model.PaginaActual < Model.TotalPaginas)
-{
-        @Html.ActionLink("Siguiente", "Index", new { pagina = Model.PaginaActual + 1 },
-new { @class = "btn btn-sm btn-default" })
-        <span></span>
-        @Html.ActionLink(">>", "Index", new { pagina = Model.TotalPaginas },
-new { @class = "btn btn-sm btn-default" })
-}
-else
-{
-        @Html.ActionLink("Siguiente", "Index", new { pagina = Model.TotalPaginas - 1 },
-new { @class = "btn btn-sm btn-default disabled" })
-        <span></span>
-        @Html.ActionLink(">>", "Index", new { pagina = Model.TotalPaginas },
-new { @class = "btn btn-sm btn-default disabled" })
-}
-<br>
-<br>
-<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-        <div class="btn-group mr-1" role="group" aria-label="First group">
-                <a asp-action="Create">
-                        <button style="display:inline-block" class="custom-btn custom-success">Crear nuevo
-                        </button></a>
-        </div>
-        <div class="btn-group mr-1" role="group" aria-label="Second group">
-                <a href="javascript:(function(){document.tableForm.submit();return void(0);})()">
-                        <button style="display:inline-block" class="custom-btn custom-danger">Borrar selección</button>
+<a asp-action="Index" asp-route-sortOrder="@ViewData["CurrentSort"]" asp-route-pageNumber="@(Model.PageIndex - 1)"
+        asp-route-currentFilter="@ViewData["CurrentFilter"]" class="btn btn-default @prevDisabled">
+        << Anterior </a>
+                @(Model.PageIndex) de @(Model.TotalPages)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["CurrentSort"]"
+                        asp-route-pageNumber="@(Model.PageIndex + 1)"
+                        asp-route-currentFilter="@ViewData["CurrentFilter"]" class="btn btn-default @nextDisabled">
+                        Siguiente >>
                 </a>
-        </div>
-        <div class="btn-group" role="group" aria-label="Third group">
-                <a href='javascript:history.go(-1)'>
-                        <button style="display:inline-block" class="custom-btn custom-warning">Atrás</button>
-                </a>
-        </div>
-</div>
 
-<script language="JavaScript">
-        function toggle(source) {
-                checkboxes = document.getElementsByName('deleteInputs');
-                for (var i = 0, n = checkboxes.length; i < n; i++) {
-                        checkboxes[i].checked = source.checked;
-                }
-        }
-</script>
+                <br>
+                <br>
+                <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                        <div class="btn-group mr-1" role="group" aria-label="First group">
+                                <a asp-action="Create">
+                                        <button style="display:inline-block" class="custom-btn custom-success">Crear
+                                                nuevo
+                                        </button></a>
+                        </div>
+                        <div class="btn-group mr-1" role="group" aria-label="Second group">
+                                <a href="javascript:(function(){document.tableForm.submit();return void(0);})()">
+                                        <button style="display:inline-block" class="custom-btn custom-danger">Borrar
+                                                selección</button>
+                                </a>
+                        </div>
+                        <div class="btn-group" role="group" aria-label="Third group">
+                                <a href='javascript:history.go(-1)'>
+                                        <button style="display:inline-block"
+                                                class="custom-btn custom-warning">Atrás</button>
+                                </a>
+                        </div>
+                </div>
+
+                <script language="JavaScript">
+                        function toggle(source) {
+                                checkboxes = document.getElementsByName('deleteInputs');
+                                for (var i = 0, n = checkboxes.length; i < n; i++) {
+                                        checkboxes[i].checked = source.checked;
+                                }
+                        }
+                </script>
