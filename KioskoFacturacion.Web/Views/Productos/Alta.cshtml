@@ -2,94 +2,169 @@
 @{
     ViewData["Title"] = "Nuevo Producto";
 }
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+</head>
+
+
 <div class="container text-center">
-    <h1>@ViewData["Title"]</h1>
+    <h1 class=custom-title-bs>@ViewData["Title"]</h1>
 </div>
 <br>
-<form asp-action="Alta" method="post">
-    <div class="form-custom">
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label asp-for="Nombre" class="label-control"></label>
-                <input asp-for="Nombre" class="form-control" autofocus />
-                @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger"})
+<form asp-action="Alta" method="post" id="form1">
+
+    <div class="form-group">
+        <label asp-for="Nombre" class="label-control"></label>
+        <input asp-for="Nombre" class="form-control" autofocus />
+        <p class="text-danger">
+            @ViewBag.Message
+            @TempData["ErrorMessage"]
+        </p>
+    </div>
+    <div class="form-group">
+        <label asp-for="Marca" class="label-control"></label>
+        <button data-toggle="modal" data-target="#openModal" class="btn btn-sm" formaction="CrearMarca"
+            value="MarcaNueva">
+            <img src="~/assets/add.png" alt="Crear Marca" width="15" height="15"></button>
+        @Html.DropDownList("MarcaID", ViewBag.marcasList, "Elegir la marca", new { @class = "form-control"
+        })
+        @Html.ValidationMessageFor(model => model.MarcaID, "", new { @class = "text-danger"})
+    </div>
+
+
+    <div class="form-group">
+        <label asp-for="Codigo" class="label-control"></label>
+        <input asp-for="Codigo" class="form-control" />
+        @Html.ValidationMessageFor(model => model.Codigo, "", new { @class = "text-danger"})
+    </div>
+    <div class="form-group">
+        <label asp-for="Descripcion" class="control-label"></label>
+        <input asp-for="Descripcion" class="form-control">
+        @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger"})
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Estado" class="control-label"></label>
+        <select asp-for="Estado" class="form-control">
+            <option value="Activo">Activo</option>
+            <option value="Inactivo">Inactivo</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label asp-for="PrecioCosto" class="control-label"></label>
+        <input type="number" asp-for="PrecioCosto" step="0.01" class="form-control">
+    </div>
+    <div class="form-group">
+        <label asp-for="PrecioVenta" class="control-label"></label>
+        <input type="number" asp-for="PrecioVenta" step="1" class="form-control">
+    </div>
+    <hr>
+    <button type="submit" class="custom-btn custom-success" form="form1">Guardar</button>
+    <a href='javascript:history.go(-1)'><button type="button" class="custom-btn custom-warning">Atrás</button></a>
+</form>
+
+
+<!--------------------- Modal ------------------------>
+<div id="openModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title">Crear Marca</h4>
             </div>
-            <p class="text-danger">
-                @ViewBag.Message
-                @TempData["ErrorMessage"]
-            </p>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-3">
-                @Html.Label("Marca") <button type="submit" class="btn btn-sm" formaction="CrearMarca"
-                    value="MarcaNueva">
-                    <img src="~/assets/add.png" alt="Crear Marca" width="10" height="10"></button>
-                @Html.DropDownList("MarcaID", ViewBag.marcasList, "Elegir la marca", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.MarcaID, "", new { @class = "text-danger"})
-            </div>
-            <div class="form-group col-md-3">
-                <label asp-for="Codigo" class="label-control"></label>
-                <input asp-for="Codigo" class="form-control" />
-                @Html.ValidationMessageFor(model => model.Codigo, "", new { @class = "text-danger"})
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label asp-for="Descripcion" class="control-label"></label>
-                <input asp-for="Descripcion" class="form-control">
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-3">
-                @Html.DisplayNameFor(model => model.Estado)
-            </div>
-            <div class="form-group col-md-3">
-                <select asp-for="Estado" class="form-control">
-                    <option value="Activo">Activo</option>
-                    <option value="Inactivo">Inactivo</option>
-                </select>
-            </div>
-        </div>
-        @*<div class="form-row">
-            <div class="form-group col-md-6">
-            <label asp-for="Vencimiento" class="control-label"></label>
-            <input asp-for="Vencimiento" class="form-control" id="vencimiento">
-            </div>
-            <div class="form-check">
-            <label asp-for="NoVence" class="control-label"></label>
-            <input asp-for="NoVence" class="form-control" id="novence">
-            </div>
-            </div>*@
-        <div class="form-row">
-            <div class="form-group col-md-3">
-                <label asp-for="PrecioCosto" class="control-label"></label>
-                <input type="number" asp-for="PrecioCosto" step="0.01" class="form-control">
-            </div>
-            <div class="form-group col-md-3">
-                <label asp-for="PrecioVenta" class="control-label"></label>
-                <input type="number" asp-for="PrecioVenta" step="1" class="form-control">
+            <div class="modal-body">
+                <form asp-action="CrearMarca" method="post">
+                    <div class="form-row form-custom">
+                        <div class="form-group>
+                            <label asp-for=" Nombre" class="label-control"></label>
+                            <input asp-for="Nombre" class="form-control" autofocus>
+                            <p class="text-danger">
+                                @ViewBag.Message
+                                @TempData["ErrorMessage"]
+                            </p>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label for="estado">Estado</label>
+                            <select id="estado" name="estado" class="form-control">
+                                <option selected>Activo</option>
+                                <option>Inactivo</option>
+                            </select>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            @Html.Label("Rubro")
+                            @Html.DropDownList("RubroID", ViewBag.RubrosList, "Elegir el rubro", new { @class =
+                            "form-control"})
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <br>
+                        <button type="submit" class="custom-btn custom-success">Guardar</button>
+                        <button type="button" class="custom-btn custom-warning" data-dismiss="modal">Atrás</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-    <hr>
-    <span style="display: inline;">
-        <button type="submit" class="custom-btn custom-success">Guardar</button>
-        <a href='javascript:history.go(-1)'><button type="button" class="custom-btn custom-warning">Atrás</button></a>
-    </span>
-</form>
+</div>
+<!--*******************************************************************************-->
+<!-- JS includes -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 
-@*
-    @section Scripts {
-    <script type="text/javascript">
-    $(document).ready(function () {
-    $("#novence").click(function () {
-    if ($(this).is(":checked")) {
-    $("#vencimiento").attr("disabled", true);
-    $("#vencimiento").val('');
+<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+<script src="//ajax.aspnetcdn.com/ajax/mvc/4.0/jquery.validate.unobtrusive.min.js"></script>
+
+<script type="text/javascript">
+
+    function openAlert(txt) {
+        $('.alert-content').text(txt);
+        $('.alert').addClass('in');
     }
-    else
-    $("#vencimiento").attr("disabled", false);
+
+    function closeAlert() {
+        $('.alert').removeClass('in');
+    }
+
+    $(function () {
+        var answer = '@Model.Nombre';
+
+        if (answer && answer != '')
+            openAlert(answer);
+
+        $('#Question').change(closeAlert);
+        $('#Question').keyup(closeAlert);
+
+        $('.submit').click(function () {
+            if ($('form').valid()) {
+
+                $.ajax({
+                    url: '@Url.RouteUrl(new{ action="GetAnswer", controller="Home"})',
+                    data: { Answer: '', Question: $('#Question').val() },
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: "application/json; charset=utf-8",
+                    success: function (resp) {
+                        openAlert(resp);
+                    }
+                });
+            }
+            else {
+                closeAlert();
+            }
+        });
+
     });
-    });
-    </script>
-    }*@
+
+</script>
+
+
+</html>

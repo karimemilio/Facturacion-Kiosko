@@ -144,3 +144,22 @@ li > .btn-success-custom {
   font-weight: bold;
   color: #7b2294;
 }
+
+.custom-title-bs {
+  font-size: calc(1.375rem + 1.5vw);
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+  box-sizing: border-box;
+  display: block;
+  margin-block-start: 0.67em;
+  margin-block-end: 0.67em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  text-align: center !important;
+  font-family: var(--bs-font-sans-serif);
+  color: #212529;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}

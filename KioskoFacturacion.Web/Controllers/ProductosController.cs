@@ -100,7 +100,11 @@ namespace KioskoFacturacion.Web.Controllers
                 })
                 .ToList();
             ViewBag.marcasList = new SelectList(marcasList, "Value", "Text");
-            return View();
+
+            List<Rubro> rubrosList = _context.Rubros.ToList();
+            ViewBag.RubrosList = new SelectList(rubrosList, "ID", "Nombre");
+
+            return View(new Producto());
         }
 
 
@@ -121,13 +125,32 @@ namespace KioskoFacturacion.Web.Controllers
                 })
                 .ToList();
             ViewBag.marcasList = new SelectList(marcasList, "Value", "Text");
-            return View("Alta", producto);
+            List<Rubro> rubrosList = _context.Rubros.ToList();
+            ViewBag.RubrosList = new SelectList(rubrosList, "ID", "Nombre");
+
+            return View(new Producto());
         }
 
         [HttpPost]
-        public async Task<IActionResult> CrearMarca([Bind("ID, Nombre, Codigo, Descripcion, Estado, PrecioCosto, PrecioVenta MarcaID")] Producto producto)
+        public async Task<IActionResult> CrearMarca([Bind("Nombre, Estado, RubroID")] Marca marca)
         {
-            return RedirectToAction("CreateFromProducto", "Marcas", new { area = "" });
+            if (ModelState.IsValid)
+            {
+                //Check if Nombre exists
+                var nom = _context.Marcas.FirstOrDefault(x => x.Nombre == marca.Nombre);
+                if (nom == null)
+                {
+                    _context.Add(marca);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction("Alta", "Productos", new { area = "" });
+                }
+                else
+                {
+                    string msg = "Nombre duplicado";
+                    TempData["ErrorMessage"] = msg;
+                }
+            }
+            return RedirectToAction("Alta", "Productos", new { area = "" });
         }
 
         public async Task<IActionResult> Buscar(string filtroNombre)
@@ -222,6 +245,14 @@ namespace KioskoFacturacion.Web.Controllers
             }
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Delete()
+        {
+            var productos = from e in this._context.Productos
+                            .Include("Marca.Rubro")
+                            select e;
+            return View(productos);
         }
 
     }
